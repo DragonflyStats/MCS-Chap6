@@ -9,6 +9,27 @@
 
 
 
+\subsubsection{The LME model as a general linear model}
+Henderson's equations in (\ref{Henderson:Equations}) can be rewritten $( T^\prime W^{-1} T ) \delta = T^\prime W^{-1} y_{a} $ using
+\[
+\delta = \left(\begin{array}{c}\beta \\ b \end{array}\right),
+\ y_{a} = \left(\begin{array}{c}
+y \cr \psi
+\end{array}\right),
+\ T = \left(\begin{array}{cc}
+X & Z  \\
+0 & I
+\end{array}\right),
+\ \textrm{and} \ W = \left(\begin{array}{cc}
+\Sigma & 0  \cr
+0 &  D \end{array}\right),
+\]
+where \cite{Lee:Neld:Pawi:2006} describe $\psi = 0$ as quasi-data with mean $\mathrm{E}(\psi) = b.$ Their formulation suggests that the joint estimation of the coefficients $\beta$ and $b$ of the linear mixed effects model can be derived via a classical augmented general linear model $y_{a} = T\delta + \varepsilon$ where $\mathrm{E}(\varepsilon) = 0$ and $\mathrm{var}(\varepsilon) = W,$ with \emph{both} $\beta$ and $b$ appearing as fixed parameters. The usefulness of this reformulation of an LME as a general linear model will be revisited.
+
+
+%------------------------------------------------------------------------------------%
+\newpage                                                                    % - Section 4
+
 
 \section{Hierarchical likelihood} %3.3
 Inferential method was developed for the mixed linear model via Lee and Nelder's (1996) hierarchical-likelihood (h-likelihood).
