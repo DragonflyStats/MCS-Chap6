@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{epsfig}
 \usepackage{subfigure}
+\usepackage{framed}
 %\usepackage{amscd}
 \usepackage{amssymb}
 \usepackage{subfigure}
@@ -18,9 +19,102 @@
 \setmargins{2.0cm}{2cm}{15.5 cm}{23.5cm}{0.5cm}{0cm}{1cm}{1cm}
 
 \pagenumbering{arabic}
-
-
 \begin{document}
+	
+	\subsection{LikelihoodRatio Tests}
+	
+	Conventionally LME models can be tested using Likelihood Ratio Tests, wherein a reference model is compared to a nested model.
+	\begin{framed}
+		\begin{verbatim}
+		> Ref.Fit = lme(y ~ meth-1, data = dat,   #Symm , Symm#
+		+     random = list(item=pdSymm(~ meth-1)), 
+		+     weights=varIdent(form=~1|meth),
+		+     correlation = corSymm(form=~1 | item/repl), 
+		+     method="ML")
+		\end{verbatim}
+	\end{framed}
+	Roy(2009) presents two nested models that specify the condition of equality as required, with a third nested model for an additional test. There three formulations share the same structure, and can be specified by making slight alterations of the code for the Reference Model.
+	Nested Model (Between-Item Variability)
+	\begin{framed}
+		\begin{verbatim}
+		> NMB.fit  = lme(y ~ meth-1, data = dat,   #CS , Symm#
+		+     random = list(item=pdCompSymm(~ meth-1)),
+		+     correlation = corSymm(form=~1 | item/repl), 
+		+     method="ML")
+		\end{verbatim}
+	\end{framed}
+	
+	
+	
+	\begin{framed}
+		\begin{verbatim}
+		Nested Model (Within –item Variability)
+		> NMW.fit = lme(y ~ meth-1, data = dat,   #Symm , CS# 
+		+     random = list(item=pdSymm(~ meth-1)),
+		+     weights=varIdent(form=~1|meth), 
+		+     correlation = corCompSymm(form=~1 | item/repl), 
+		+     method="ML")
+		\end{verbatim}
+	\end{framed}
+	
+	Nested Model (Overall Variability)
+	Additionally there is a third nested model, that can be used to test overall variability, substantively a a joint test for between-item and within-item variability. The motivation for including such a test in the suite is not clear, although it does circumvent the need for multiple comparison procedures in certain circumstances, hence providing a simplified procedure for non-statisticians.
+	
+	\begin{framed}
+		\begin{verbatim}
+		> NMO.fit = lme(y ~ meth-1, data = dat,   #CS , CS# 
+		+     random = list(item=pdCompSymm(~ meth-1)), 
+		+     correlation = corCompSymm(form=~1 | item/repl), 
+		+     method="ML")
+		\end{verbatim}
+	\end{framed}
+	
+	ANOVAs  for  Original Fits
+	The likelihood Ratio test is very simple to implement in R. All that is required it to specify the reference model and the relevant nested mode as arguments to the command anova().
+	The figure below displays the three tests described by Roy (2009).
+	
+	\begin{framed}
+		\begin{verbatim}
+		> testB    = anova(Ref.Fit,NMB.fit)                          # Between-Subject Variabilities
+		> testW   = anova(Ref.Fit,NMW.fit)                        # Within-Subject Variabilities
+		> testO     = anova(Ref.Fit,NMO.fit)                        # Overall Variabilities
+		
+		\end{verbatim}
+	\end{framed}
+	
+	
+	
+	
+	%-----------------------------------------------------------------------------------------------------%
+	\newpage
+	
+	
+	
+\subsection{Reference Model (Ref.Fit)}
+Conventionally LME models can be tested using Likelihood Ratio Tests, wherein a reference model is compared to a nested model.
+\begin{framed}
+	\begin{verbatim}
+	> Ref.Fit = lme(y ~ meth-1, data = dat,   #Symm , Symm#
+	+     random = list(item=pdSymm(~ meth-1)), 
+	+     weights=varIdent(form=~1|meth),
+	+     correlation = corSymm(form=~1 | item/repl), 
+	+     method="ML")
+	\end{verbatim}
+\end{framed}
+
+
+Roy(2009) presents two nested models that specify the condition of equality as required, with a third nested model for an additional test. There three formulations share the same structure, and can be specified by making slight alterations of the code for the Reference Model.
+
+\subsection{Nested Model (Between-Item Variability)}
+\begin{framed}
+	\begin{verbatim}
+	> NMB.fit  = lme(y ~ meth-1, data = dat,   #CS , Symm#
+	+     random = list(item=pdCompSymm(~ meth-1)),
+	+     correlation = corSymm(form=~1 | item/repl), 
+	+     method="ML")
+	\end{verbatim}
+\end{framed}
+
 \section{Testing Procedures}
 Roy's methodology requires the construction of four candidate models. The first candidate model is compared to each of the three other models successively. It is the alternative model in each of the three tests, with the other three models acting as the respective null models.
 
