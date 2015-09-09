@@ -1,16 +1,17 @@
 \contentsline {section}{\numberline {0.1}Likelihood and estimation}{2}
 \contentsline {subsection}{\numberline {0.1.1}Likelihood Ratio Tests}{3}
 \contentsline {section}{\numberline {0.2}Model Selection Using Likelihood Ratio Tests}{4}
-\contentsline {section}{\numberline {0.3}Nested Models }{5}
-\contentsline {subsection}{\numberline {0.3.1}Likelihood Ratio Tests}{5}
-\contentsline {section}{\numberline {0.4}Likelihood Ratio Tests}{6}
+\contentsline {subsection}{\numberline {0.2.1}Likelihood Ratio Tests}{5}
+\contentsline {section}{\numberline {0.3}Likelihood Ratio Tests}{6}
 \contentsline {subsubsection}{ PB on LRTS for LMEs}{6}
-\contentsline {subsection}{\numberline {0.4.1}Pinheiro Bates}{6}
-\contentsline {subsection}{\numberline {0.4.2}Empirical p-values of LRT tests}{6}
-\contentsline {subsection}{\numberline {0.4.3}Other material}{6}
-\contentsline {subsection}{\numberline {0.4.4}Nested and Reference Models}{7}
-\contentsline {subsection}{\numberline {0.4.5}LRTs for covariance parameters}{7}
-\contentsline {subsection}{\numberline {0.4.6}Likelihood Ratio Tests}{8}
-\contentsline {subsection}{\numberline {0.4.7}Likelihood Ratio Tests}{8}
-\contentsline {subsection}{\numberline {0.4.8}Relevance of Estimation Methods}{9}
-\contentsline {subsection}{\numberline {0.4.9}Test for inter-method bias}{12}
+\contentsline {subsection}{\numberline {0.3.1}Pinheiro Bates}{6}
+\contentsline {subsection}{\numberline {0.3.2}Empirical p-values of LRT tests}{6}
+\contentsline {subsection}{\numberline {0.3.3}Other material}{6}
+\contentsline {subsection}{\numberline {0.3.4}Nested and Reference Models}{7}
+\contentsline {subsection}{\numberline {0.3.5}LRTs for covariance parameters}{7}
+\contentsline {subsection}{\numberline {0.3.6}Likelihood Ratio Tests}{8}
+\contentsline {subsection}{\numberline {0.3.7}Likelihood Ratio Tests}{8}
+\contentsline {subsection}{\numberline {0.3.8}Relevance of Estimation Methods}{9}
+\contentsline {subsection}{\numberline {0.3.9}Other material}{12}
+\contentsline {subsection}{\numberline {0.3.10}Nested and Reference Models}{12}
+\contentsline {subsection}{\numberline {0.3.11}Test for inter-method bias}{12}
