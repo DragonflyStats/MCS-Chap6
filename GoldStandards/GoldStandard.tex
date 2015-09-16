@@ -1,5 +1,23 @@
-\documentclass[Chap1bmain.tex]{subfiles}
+\documentclass[12pt, a4paper]{article}
+\usepackage{natbib}
+\usepackage{vmargin}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{subfigure}
+%\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{amsthm, amsmath}
+%\usepackage[dvips]{graphicx}
+
+
 \begin{document}
+	\author{Kevin O'Brien}
+	\title{Gold Standards}
+	\date{\today}
+	\maketitle
+	\tableofcontents
+	\newpage
 \citet[p.47]{DunnSEME} cautions that`gold standards' should not be
 assumed to be error free. `It is of necessity a subjective
 decision when we come to decide that a particular method or
@@ -115,4 +133,13 @@ Consequently when one of the methods is essentially a bronze
 standard, as opposed to a true gold standard, the comparison
 procedure should be considered as being of the second category.
 
+\subsection{Repeatability and gold standards}
+Currently the phrase `gold standard' describes the most accurate method of measurement available. No other criteria are set out. Further to \citet{dunnSEME}, various gold standards have a varying levels of repeatability. Dunn cites the example of the sphygmomanometer, which is prone to measurement error. Consequently it can be said that a measurement method can be the `gold standard', yet have poor repeatability. Some authors, such as [cite] and [cite] have recognized this problem. Hence, if the most accurate method is considered to have poor repeatability, it is referred to as a 'bronze standard'.  Again, no formal definition of a 'bronze standard' exists.
+
+The coefficient of repeatability may provide the basis of formulation a formal definition of a `gold standard'. For example, by determining the ratio of $CR$ to the sample mean $\bar{X}$. Further to [Lin], it is preferable to have a sample size specified in advance. A gold standard may be defined as the method with the lowest value of $\lambda = CR /\bar{X}$ with $\lambda < 0.1\%$. Similarly, a silver standard may be defined as the method with the lowest value of $\lambda $ with $0.1\% \leq \lambda < 1\%$. Such thresholds are solely for expository purposes.
+
+
+
+\bibliography{DB-txfrbib}
 \end{document}
+
