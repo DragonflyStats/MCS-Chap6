@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.20)  9 SEP 2015 13:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.12)  20 SEP 2015 19:48
 entering extended mode
 **LikelihoodRatioTest.tex
 
-(C:\Users\kevin.obrien\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatio
-Test.tex
+(C:\Users\Kevin\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatioTest.te
+x
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -33,15 +33,16 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(C:\Users\kevin.obrien\AppData\Roaming\MiKTeX\2.9\tex\latex\natbib\natbib.sty
+(C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\latex\natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip43
 \bibsep=\skip44
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count88
 )
-(C:\Users\kevin.obrien\AppData\Roaming\MiKTeX\2.9\tex\latex\ieeepes\vmargin.sty
+(C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\latex\ieeepes\vmargin.sty
 Package: vmargin 1999/06/01
+
 Package `vmargin', V2.2, <1999/06/01>
 \PaperWidth=\dimen103
 \PaperHeight=\dimen104
@@ -82,8 +83,7 @@ Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 \epsfxsize=\dimen107
 \epsfysize=\dimen108
 )
-(C:\Users\kevin.obrien\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure
-.sty
+(C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure.sty
 Package: subfigure 2002/07/30 v2.1.4 subfigure package
 \subfigtopskip=\skip45
 \subfigcapskip=\skip46
@@ -99,12 +99,11 @@ Package: subfigure 2002/07/30 v2.1.4 subfigure package
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-
-(C:\Users\kevin.obrien\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure
-.cfg)
+(C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure.cfg)
 \subfig@top=\skip49
 \subfig@bottom=\skip50
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
@@ -186,8 +185,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-(C:\Users\kevin.obrien\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatio
-Test.aux)
+(C:\Users\Kevin\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatioTest.au
+x)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
@@ -200,9 +199,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
-
-(C:\Users\kevin.obrien\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
-i
+ (C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count106
 \scratchdimen=\dimen120
@@ -226,9 +223,9 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 27.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/Users/kevin.obrien/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-(C:\Users\kevin.obrien\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatio
-Test.toc)
+{C:/Users/Kevin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(C:\Users\Kevin\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatioTest.to
+c)
 \tf@toc=\write3
  [1
 
@@ -239,92 +236,113 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 42.
+ [2]
 
-[2]
+Package natbib Warning: Citation `ARoy2009' on page 3 undefined on input line 5
+7.
 
-Package natbib Warning: Citation `roy' on page 3 undefined on input line 57.
+
+Package natbib Warning: Citation `west' on page 3 undefined on input line 62.
 
 
 Package natbib Warning: Citation `pb' on page 3 undefined on input line 62.
 
-
-Package natbib Warning: Citation `west' on page 3 undefined on input line 68.
-
-
-Package natbib Warning: Citation `pb' on page 3 undefined on input line 68.
-
 [3]
 
-Package natbib Warning: Citation `pb' on page 4 undefined on input line 76.
+Package natbib Warning: Citation `roy' on page 4 undefined on input line 67.
+
+
+Package natbib Warning: Citation `west' on page 4 undefined on input line 72.
+
+
+Package natbib Warning: Citation `pb' on page 4 undefined on input line 72.
 
 [4]
 
-Package natbib Warning: Citation `roy' on page 5 undefined on input line 116.
+Package natbib Warning: Citation `roy' on page 5 undefined on input line 78.
 
 
-Package natbib Warning: Citation `west' on page 5 undefined on input line 121.
+Package natbib Warning: Citation `pb' on page 5 undefined on input line 83.
 
 
-Package natbib Warning: Citation `pb' on page 5 undefined on input line 121.
+Package natbib Warning: Citation `west' on page 5 undefined on input line 89.
+
+
+Package natbib Warning: Citation `pb' on page 5 undefined on input line 89.
 
 [5]
 
-Package natbib Warning: Citation `pb' on page 6 undefined on input line 142.
+Package natbib Warning: Citation `pb' on page 6 undefined on input line 97.
+
+[6]
+
+Package natbib Warning: Citation `roy' on page 7 undefined on input line 137.
 
 
-Package natbib Warning: Citation `pb' on page 6 undefined on input line 147.
+Package natbib Warning: Citation `west' on page 7 undefined on input line 142.
 
 
-Package natbib Warning: Citation `pb' on page 6 undefined on input line 149.
+Package natbib Warning: Citation `pb' on page 7 undefined on input line 142.
 
-[6] [7]
+[7]
 
-Package natbib Warning: Citation `roy' on page 8 undefined on input line 190.
-
-
-Package natbib Warning: Citation `west' on page 8 undefined on input line 195.
+Package natbib Warning: Citation `pb' on page 8 undefined on input line 163.
 
 
-Package natbib Warning: Citation `pb' on page 8 undefined on input line 195.
+Package natbib Warning: Citation `pb' on page 8 undefined on input line 168.
+
+
+Package natbib Warning: Citation `pb' on page 8 undefined on input line 170.
 
 [8] [9]
 
-Package natbib Warning: Citation `youngjo' on page 10 undefined on input line 2
-52.
+Package natbib Warning: Citation `roy' on page 10 undefined on input line 211.
 
-[10]
 
-Package natbib Warning: Citation `Lam' on page 11 undefined on input line 259.
+Package natbib Warning: Citation `west' on page 10 undefined on input line 216.
 
-[11] [12]
+
+
+Package natbib Warning: Citation `pb' on page 10 undefined on input line 216.
+
+[10] [11]
+
+Package natbib Warning: Citation `youngjo' on page 12 undefined on input line 2
+73.
+
+[12]
+
+Package natbib Warning: Citation `Lam' on page 13 undefined on input line 280.
+
+[13] [14]
 
 Package natbib Warning: There were undefined citations.
 
 
-(C:\Users\kevin.obrien\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatio
-Test.aux) ) 
+(C:\Users\Kevin\Documents\GitHub\MCS05-SpecialTopics\LRT\LikelihoodRatioTest.au
+x) ) 
 Here is how much of TeX's memory you used:
- 2758 strings out of 493921
- 34870 string characters out of 3144855
+ 2759 strings out of 493921
+ 34719 string characters out of 3144875
  88672 words of memory out of 3000000
- 6020 multiletter control sequences out of 15000+200000
+ 6021 multiletter control sequences out of 15000+200000
  17047 words of font info for 63 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,6n,26p,488b,183s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
-ti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi
-12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.
-pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.p
-fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:
-/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on LikelihoodRatioTest.pdf (13 pages, 138323 bytes).
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pf
+b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pf
+b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on LikelihoodRatioTest.pdf (15 pages, 141476 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
+ 95 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

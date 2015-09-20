@@ -53,6 +53,27 @@ more effectively, and is less sensitive to outliers than ML.  The problem with R
 estimate the model. Therefore models derived using ML must be used instead.
 %=======================================================================================%
 \newpage
+\section{Likelihood Ratio Tests}
+The relationship between the respective models presented by \citet{ARoy2009} is known as ``nesting".
+A model A to be nested in the reference model, model B, if Model A is a special case of Model B, or with some specific constraint applied.
+
+A general method for comparing models with a nesting relationship is the likelihood ratio test (LRTs). LRTs are a family of tests used to compare the value of likelihood functions for two models, whose respective formulations define a hypothesis to be tested (i.e. the nested and reference model). The significance of the likelihood ratio test can be found by comparing the likelihood ratio to the $\chi^2$ distribution, with the appropriate degrees of freedom.
+
+When testing hypotheses around covariance parameters in an LME model, REML estimation for both models is recommended by West et al. REML estimation can be shown to reduce the bias inherent in ML estimates of covariance parameters \citep{west}. Conversely, \citet{pb} advises that testing hypotheses on fixed-effect parameters should be based on ML estimation, and that using REML would not be appropriate in this context.
+
+%-----------------------------------------------------------------------------------%
+\newpage
+\subsection{Likelihood Ratio Tests}
+The relationship between the respective models presented by \citet{roy} is known as ``nesting".
+A model A to be nested in the reference model, model B, if Model A is a special case of Model B, or with some specific constraint applied.
+
+A general method for comparing models with a nesting relationship is the likelihood ratio test (LRTs). LRTs are a family of tests used to compare the value of likelihood functions for two models, whose respective formulations define a hypothesis to be tested (i.e. the nested and reference model). The significance of the likelihood ratio test can be found by comparing the likelihood ratio to the $\chi^2$ distribution, with the appropriate degrees of freedom.
+
+When testing hypotheses around covariance parameters in an LME model, REML estimation for both models is recommended by West et al. REML estimation can be shown to reduce the bias inherent in ML estimates of covariance parameters \citep{west}. Conversely, \citet{pb} advises that testing hypotheses on fixed-effect parameters should be based on ML estimation, and that using REML would not be appropriate in this context.
+
+
+%-----------------------------------------------------------------------------------%
+\newpage
 \subsection{Likelihood Ratio Tests}
 The relationship between the respective models presented by \citet{roy} is known as ``nesting".
 A model A to be nested in the reference model, model B, if Model A is a special case of Model B, or with some specific constraint applied.
