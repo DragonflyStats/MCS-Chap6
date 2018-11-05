@@ -1,0 +1,26 @@
+py_run Run Python code
+
+#### Description 
+
+Execute code within the the __main__ Python module.
+
+#### Usage
+<pre><code>
+py_run_string(code, local = FALSE, convert = TRUE)
+py_run_file(file, local = FALSE, convert = TRUE)
+py_eval(code, convert = TRUE)
+</code></pre>
+
+#### Arguments
+* code Code to execute
+* local Whether to create objects in a local/private namespace (if FALSE, objects are created within the main module).
+convert TRUE to automatically convert Python objects to their R equivalent. If you pass FALSE you can do manual conversion using the py_to_r() function.
+* file Source file
+
+#### Value
+For py_eval(), the result of evaluating the expression; For py_run_string() and py_run_file(),
+the dictionary associated with the code execution.
+
+
+
+
