@@ -1,0 +1,15 @@
+py_len Length of Python object
+
+#### Description 
+
+Get the length of a Python object (equivalent to the Python len() built in function).
+
+#### Usage
+<pre><code>
+py_len(x)
+<code></pre>
+#### Arguments
+x Python object
+
+#### Value
+Length as integer
