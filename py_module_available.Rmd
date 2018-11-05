@@ -1,0 +1,13 @@
+## ``py_module_available``: Check if a Python module is available on this system.
+#### Description 
+Check if a Python module is available on this system.
+#### Usage
+<pre><code>
+py_module_available(module)
+</code></pre>
+
+#### Arguments
+* module Name of module
+
+#### Value
+* Logical indicating whether module is available
