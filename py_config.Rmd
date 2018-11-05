@@ -1,0 +1,11 @@
+py_config 9
+py_config Python configuration
+#### Description 
+Information on Python and Numpy versions detected
+#### Usage
+<pre><code>
+py_config()
+</code></pre>
+
+#### Value
+Python configuration object; Logical indicating whether Python bindings are available
