@@ -1,0 +1,17 @@
+
+py_str An S3 method for getting the string representation of a Python object
+#### Description 
+An S3 method for getting the string representation of a Python object
+#### Usage
+
+py_str(object, ...)
+
+#### Arguments
+* object Python object
+* ... Unused
+
+#### Details
+The default implementation will call PyObject_Str on the object.
+
+#### Value
+Character vector
