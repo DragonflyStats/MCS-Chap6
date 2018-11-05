@@ -1,0 +1,16 @@
+## py_del_item Delete / remove an item from a Python object
+#### Description 
+Delete an item associated with a Python object, as through its __delitem__ method.
+#### Usage
+<pre><code>
+py_del_item(x, name)
+</code></pre>
+
+#### Arguments
+* x A Python object.
+* name The item name.
+
+#### Value
+The (mutated) object x, invisibly.
+See Also
+Other item-related APIs: py_get_item, py_set_item
