@@ -1,0 +1,23 @@
+
+py_set_item Set an item for a Python object
+
+#### Description 
+Set an item on a Python object, similar to how x[name] = value might be used in Python code to
+set an item called name with value value on object x. The object’s __setitem__ method will be
+called.
+
+#### Usage
+<pre><code>
+py_set_item(x, name, value)
+</code></pre>
+
+#### Arguments
+* x A Python object.
+* name The item name.
+* value The item value.
+
+#### Value
+The (mutated) object x, invisibly.
+See Also
+Other item-related APIs: py_del_item, py_get_item
+
