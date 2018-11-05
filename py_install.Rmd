@@ -1,0 +1,24 @@
+
+## ``py_install``: Install Python packages
+
+#### Description 
+Install Python packages into a virtualenv or conda env.
+
+#### Usage
+<pre><code>
+py_install(packages, envname = "r-reticulate", method = c("auto", "virtualenv", "conda"), conda = "auto", ...)
+</code></pre>
+
+#### Arguments
+* packages Character vector with package names to install
+* envname Name of environment to install packages into
+* method Installation method. By default, "auto" automatically finds a method that will work in the local environment. Change the default to force a specific installation method. Note that the "virtualenv" method is not available on Windows.
+* conda Path to conda executable (or "auto" to find conda using the PATH and other conventional install locations).
+* ... Additional arguments passed to conda_install() or virtualenv_install().
+
+#### Details
+
+On Linux and OS X the "virtualenv" method will be used by default ("conda" will be used if virtualenv
+isn’t available). On Windows, the "conda" method is always used.
+See Also
+conda-tools, virtualenv-tools
