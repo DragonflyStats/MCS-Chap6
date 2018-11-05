@@ -1,0 +1,28 @@
+virtualenv-tools Interface to virtualenv
+#### Description 
+R functions for managing Python virtual environments
+#### Usage
+<pre><code>
+virtualenv_list()
+virtualenv_root()
+virtualenv_create(envname)
+virtualenv_install(envname, packages, ignore_installed = FALSE)
+virtualenv_remove(envname, packages = NULL, confirm = interactive())
+virtualenv_python(envname)
+</code></pre>
+#### Arguments
+* envname Name of virtual environment
+*  packages Character vector with package names to install or remove.
+* ignore_installed Ignore any previously installed versions of packages
+* confirm Confirm before removing packages or virtual environments
+
+#### Details
+* Virtual environments are by default located at ~/.virtualenvs. You can change this behavior by
+defining the WORKON_HOME environment variable.
+* Virtual environment functions are not supported on Windows (the use of conda environments is
+recommended on Windows).
+
+#### Value
+virtualenv_list() returns a chracter vector with the names of available virtual environments.
+virtualenv_root() returns the root directory for virtual environments.
+with.python.builtin.object
