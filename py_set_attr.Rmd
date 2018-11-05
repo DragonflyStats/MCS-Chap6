@@ -1,0 +1,11 @@
+
+py_set_attr Set an attribute of a Python object
+#### Description 
+Set an attribute of a Python object
+#### Usage
+py_set_attr(x, name, value)
+
+#### Arguments
+* x Python object
+* name Attribute name
+* value Attribute value
