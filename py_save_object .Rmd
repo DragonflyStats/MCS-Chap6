@@ -1,0 +1,13 @@
+py_save_object Save and load Python objects with pickle
+#### Description 
+Save and load Python objects with pickle
+#### Usage
+<pre><code>
+py_save_object(object, filename, pickle = "pickle")
+py_load_object(filename, pickle = "pickle")
+</code></pre>
+
+#### Arguments
+* object Object to save
+* filename File name
+* pickle The implementation of pickle to use (defaults to "pickle" but could e.g. also be "cPickle")
