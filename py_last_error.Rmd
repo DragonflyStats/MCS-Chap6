@@ -1,0 +1,23 @@
+---
+title: "Reticulate: py_last_error"
+
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+py_last_error Get or clear the last Python error encountered
+#### Description 
+Get or clear the last Python error encountered
+#### Usage
+<pre><code>
+py_last_error()
+py_clear_last_error()
+</code></pre>
+
+#### Value
+For py_last_error(), a list with the type, value, and traceback for the last Python error encountered
+(can be NULL if no error has yet been encountered).
