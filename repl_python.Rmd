@@ -1,0 +1,52 @@
+---
+title: "Reticulate"
+author: "Kevin O'Brien"
+date: "5 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+## ``repl_python``: Run a Python REPL
+#### Description 
+This function provides a Python REPL in the R session, which can be used to interactively run
+Python code. All code executed within the REPL is run within the Python main module, and any
+generated Python objects will persist in the Python session after the REPL is detached.
+#### Usage
+<pre><code>
+repl_python(module = NULL, quiet = getOption("reticulate.repl.quiet",
+default = FALSE))
+</code></pre>
+
+#### Arguments
+* module An (optional) Python module to be imported before the REPL is launched.
+* quiet Boolean; print a startup banner when launching the REPL? If TRUE, the banner will be suppressed.
+
+#### Details
+When working with R and Python scripts interactively, one can activate the Python REPL with
+repl_python(), run Python code, and later run exit to return to the R console.
+
+
+#### Examples
+
+```{r}
+## Not run:
+# enter the Python REPL, create a dictionary, and exit
+repl_python()
+dictionary = {'alpha': 1, 'beta': 2}
+exit
+# access the created dictionary from R
+py$dictionary
+# $alpha
+# [1] 1
+#
+# $beta
+# [1] 2
+## End(Not run)
+```
+
+See Also
+py, for accessing objects created using the Python REPL.
