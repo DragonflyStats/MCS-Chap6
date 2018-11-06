@@ -97,7 +97,7 @@ builtins <- import_builtins()
 builtins$print('foo')
 ```
 The main module is generally useful if you have executed Python code from a file or string and want to get access 
-to it’s results (see the section below for more details).
+to itâ€™s results (see the section below for more details).
 
 
 ### Sourcing Scripts
@@ -105,15 +105,16 @@ to it’s results (see the section below for more details).
 The source_python() function will source a Python script and make the objects it creates available within an R 
 environment (by default the calling environment). For example, consider the following Python script:
 
+<pre><code>
 def add(x, y):
   return x + y
+</code></pre>
 
 We source it using the ``source_python()`` function and then can call the ``add()`` function directly from R:
-
+<pre><code>
 source_python('add.py')
 add(5, 10)
-[1] 15
-
+</code></pre>
 
 ### Executing Code
 
@@ -133,7 +134,7 @@ py$x
 ### Object Conversion
 
 By default when Python objects are returned to R they are converted to their equivalent R types. 
-However, if you’d rather make conversion from Python to R explicit and deal in native Python objects by default you can pass convert = FALSE to the import function. In this case Python to R conversion will be disabled for the module returned from import. For example:
+However, if youâ€™d rather make conversion from Python to R explicit and deal in native Python objects by default you can pass convert = FALSE to the import function. In this case Python to R conversion will be disabled for the module returned from import. For example:
 ```{r}
 # import numpy and specify no automatic Python to R conversion
 np <- import("numpy", convert = FALSE)
@@ -152,9 +153,10 @@ As illustrated above, if you need access to an R object at end of your computati
 
 You can print documentation on any Python object using the py_help() function. For example:
 
+<pre><code>
 os <- import("os")
 py_help(os$chdir)
-
+</code></pre>
 
 ### Lists, Tuples, and Dictionaries
 
@@ -168,13 +170,15 @@ foo$bar(indexes = list(42L))
 
 Similarly, a Python API might require a tuple rather than a list. In that case you can use the ``tuple()`` function:
 
+<pre><code>
 tuple("a", "b", "c")
+</code></pre>
 
 R named lists are converted to Python dictionaries however you can also explicitly create a Python dictionary using the dict() function:
-
+<pre><code>
 dict(foo = "bar", index = 42L)
-
-This might be useful if you need to pass a dictionary that uses a more complex object (as opposed to a string) as it’s key.
+</code></pre>
+This might be useful if you need to pass a dictionary that uses a more complex object (as opposed to a string) as itâ€™s key.
 
 
 ### Numeric Types and Indexes
@@ -182,7 +186,7 @@ This might be useful if you need to pass a dictionary that uses a more complex o
 R and Python have different default numeric types. If you write 42 in R it is considered a floating point number whereas 42 in Python is considered an integer.
 
 This means that when a Python API expects an integer, you need to be sure to use the L suffix within R. 
-For example, if the foo function requires an integer as it’s index argument you would do this:
+For example, if the foo function requires an integer as itâ€™s index argument you would do this:
 
 foo$bar(index = 42L)
 
@@ -207,8 +211,10 @@ In this case, the NumPy array uses a column-based in memory layout that is compa
 
 You can also manually convert R arrays to NumPy using the ``np_array()`` function. For example, you might do this if you needed to create a NumPy array with C rather than Fortran style in-memory layout (for higher performance in row-oriented computations) or if you wanted to control the data type of the NumPy array more explicitly. Here are some example uses of np_array():
 
+<pre><code>
 a <- np_array(c(1:8), dtype = "float16")
 a <- np_array(c(1:8), order = "C")
+</code></pre>
 
 Reasoning about arrays which use distinct in-memory orders can be tricky. The Arrays in R and Python article provides additional details.
 
@@ -232,7 +238,7 @@ If the R data frame has row names, the generated Pandas DataFrame will be re-ind
 available for a DatetimeIndex associated with a Pandas DataFrame; however, because R only supports character vectors for row names they are converted to character first.
 
 
-Sparse Matrices
+#### Sparse Matrices
 
 Sparse matrices created by Matrix R package can be converted Scipy CSC matrix, and vice versa. This is often useful when you want to pass 
 sparse matrices to Python functions that accepts Scipy CSC matrix to take advantage of this format, such as efficient column slicing and fast matrix vector products.
@@ -256,7 +262,7 @@ The sparse matrix looks like this:
 [4,] .         .          0.01777771 .         .        
 [5,] .         0.05885743 .          .         . 
 
-Let’s convert it to Scipy CSC matrix using r_to_py():
+Letâ€™s convert it to Scipy CSC matrix using r_to_py():
 > csc_matrix <- r_to_py(x)
 > csc_matrix
   (0, 0)    0.226495201467
@@ -299,7 +305,7 @@ be used to apply an R function to each item yielded by the iterator:
 
 iterate(iter, print)
 
-If you don’t pass a function to iterate the results will be collected into an R vector:
+If you donâ€™t pass a function to iterate the results will be collected into an R vector:
 
 results <- iterate(iter)
 
@@ -337,7 +343,7 @@ you to create a Python iterator from an R function.
 
 In Python, generators produce values using the yield keyword. In R, values are simply returned from the function. One benefit of the 
 yield keyword is that it enables successive iterations to use the state of previous iterations. In R, this can be done by returning a 
-function that mutates it’s enclosing environment via the <<- operator. For example:
+function that mutates itâ€™s enclosing environment via the <<- operator. For example:
 
 # define a generator function
 sequence_generator <-function(start) {
@@ -369,10 +375,10 @@ Note that you can change the value that indicates the end of the iteration using
 
 ### Functions
 
-By default R functions are converted to Python with a generic signature (function(...)), where there’s neither keyword argument nor default values for arguments.
+By default R functions are converted to Python with a generic signature (function(...)), where thereâ€™s neither keyword argument nor default values for arguments.
 
-For example, below we apply ``r_to_py()`` to an R function and then we use inspect Python module to get the converted function’s argument spec. 
-You can see that the signature of the wrapped function looks different than the original R function’s signature.
+For example, below we apply ``r_to_py()`` to an R function and then we use inspect Python module to get the converted functionâ€™s argument spec. 
+You can see that the signature of the wrapped function looks different than the original R functionâ€™s signature.
 
 > inspect <- import("inspect")
 > converted_func <- r_to_py(function(a, b = 1.5) {})
@@ -420,8 +426,8 @@ py_set_attr() Set an attribute of a Python object.
 py_list_attributes() List all attributes of a Python object. 
 py_len() Length of Python object. 
 py_call() Call a Python callable object with the specified arguments. 
-py_to_r() Convert a Python object to it’s R equivalent 
-r_to_py() Convert an R object to it’s Python equivalent 
+py_to_r() Convert a Python object to itâ€™s R equivalent 
+r_to_py() Convert an R object to itâ€™s Python equivalent 
 
 
 ### Pickle
