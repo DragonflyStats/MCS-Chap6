@@ -3,8 +3,11 @@ py_iterator Create a Python iterator from an R function
 #### Description 
 
 Create a Python iterator from an R function
+
 #### Usage
+<pre><code>
 py_iterator(fn, completed = NULL)
+</code></pre>
 
 #### Arguments
 * fn R function with no arguments.
