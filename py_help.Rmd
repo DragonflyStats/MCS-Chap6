@@ -2,19 +2,9 @@ py_help Documentation for Python Objects
 #### Description 
 Documentation for Python Objects
 #### Usage
+<pre><code>
 py_help(object)
-#### Arguments
-object Object to print documentation for
-py_id Unique identifer for Python object
-#### Description 
-Get a globally unique identifer for a Python object.
-#### Usage
-py_id(object)
-#### Arguments
+</code></pre>
 
-* object Python object
-* Value
-Unique identifer (as integer) or NULL
-
-Note
-In the current implementation of CPython this is the memory address of the object.
+#### Arguments
+* object Object to print documentation for
