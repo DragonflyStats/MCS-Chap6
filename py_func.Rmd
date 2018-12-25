@@ -1,10 +1,24 @@
-py_func Wrap an R function in a Python function with the same signature.
+---
+title: "``py_func ``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Wrap an R function in a Python function with the same signature.
+
 #### Description 
-This function could wrap an R function in a Python function with the same signature. Note that the
-signature of the R function must not contain esoteric Python-incompatible constructs.
+
+This function could wrap an R function in a Python function with the same signature. Note that the signature of the R function must not contain esoteric Python-incompatible constructs.
+
 #### Usage
+<pre><code>
 py_func(f)
+</code></pre>
+
 #### Arguments
-f An R function
-Value
+* f An R function
+
+#### Value
 A Python function that calls the R function f with the same signature.
