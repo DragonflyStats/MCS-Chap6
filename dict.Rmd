@@ -1,19 +1,24 @@
 dict Create Python dictionary
+
 #### Description 
-Create a Python dictionary object, including a dictionary whose keys are other Python objects rather
-than character vectors.
+Create a Python dictionary object, including a dictionary whose keys are other Python objects rather than character vectors.
+
 #### Usage
+<pre><code>
 dict(..., convert = FALSE)
 py_dict(keys, values, convert = FALSE)
+<code></pre>
+
 #### Arguments
-... Name/value pairs for dictionary (or a single named list to be converted to a
-dictionary).
-convert TRUE to automatically convert Python objects to their R equivalent. If you pass
-FALSE you can do manual conversion using the py_to_r() function.
-keys Keys to dictionary (can be Python objects)
-values Values for dictionary
-Value
+
+* ... Name/value pairs for dictionary (or a single named list to be converted to a dictionary).
+* convert TRUE to automatically convert Python objects to their R equivalent. If you pass FALSE you can do manual conversion using the py_to_r() function.
+* keys Keys to dictionary (can be Python objects)
+* values Values for dictionary
+
+#### Value
 A Python dictionary
+
 Note
 The returned dictionary will not automatically convert it’s elements from Python to R. You can do
 manual converstion with the py_to_r() function or pass convert = TRUE to request automatic
