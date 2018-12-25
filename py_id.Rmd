@@ -1,0 +1,21 @@
+## py_id Unique identifer for Python object
+
+#### Description 
+
+Get a globally unique identifer for a Python object.
+
+#### Usage
+<pre><code>
+py_id(object)
+</code></pre>
+
+#### Arguments
+* object Python object
+
+#### Value 
+
+Unique identifer (as integer) or NULL
+
+#### Note
+
+In the current implementation of CPython this is the memory address of the object.
