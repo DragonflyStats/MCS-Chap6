@@ -1,4 +1,19 @@
-py_iterator Create a Python iterator from an R function
+---
+
+title: "Reticulate: ``py_iterator ``"
+
+output: html_document
+
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+Create a Python iterator from an R function
 
 #### Description 
 
@@ -19,6 +34,7 @@ returned using the yield keyword. In R, values are simply returned from the func
 In Python, the yield keyword enables successive iterations to use the state of previous iterations.
 In R, this can be done by returning a function that mutates it’s enclosing environment via the <<-
 operator. For example:
+
 <pre><code>
 sequence_generator <- function(start) {
 value <- start
@@ -34,9 +50,8 @@ g <- py_iterator(sequence_generator(10))
 #### Value
 Python iterator which calls the R function for each iteration.
 Ending Iteration
-In Python, returning from a function without calling yield indicates the end of the iteration. In R
-however, return is used to yield values, so the end of iteration is indicated by a special return value
-(NULL by default, however this can be changed using the completed parameter). For example:
+In Python, returning from a function without calling yield indicates the end of the iteration. In R however, return is used to yield values, so the end of iteration is indicated by a special return value (NULL by default, however this can be changed using the completed parameter). For example:
+
 <pre><code>
 sequence_generator <-function(start) {
 value <- start
@@ -51,7 +66,4 @@ NULL
 </code></pre>
 
 #### Threading
-Some Python APIs use generators to parallelize operations by calling the generator on a background
-thread and then consuming it’s results on the foreground thread. The py_iterator() function
-creates threadsafe iterators by ensuring that the R function is always called on the main thread (to
-be compatible with R’s single-threaded runtime) even if the generator is run on a background thread.
+Some Python APIs use generators to parallelize operations by calling the generator on a background thread and then consuming it’s results on the foreground thread. The py_iterator() function creates threadsafe iterators by ensuring that the R function is always called on the main thread (to be compatible with R’s single-threaded runtime) even if the generator is run on a background thread.
