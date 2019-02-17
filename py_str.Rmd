@@ -1,10 +1,21 @@
+---
+title: "``reticulate::py_str``"
+output: html_document
+---
 
-py_str An S3 method for getting the string representation of a Python object
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
 #### Description 
 An S3 method for getting the string representation of a Python object
 #### Usage
-
+<pre><code>
 py_str(object, ...)
+</code></pre>
 
 #### Arguments
 * object Python object
