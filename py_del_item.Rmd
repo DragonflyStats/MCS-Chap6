@@ -1,6 +1,18 @@
-## py_del_item Delete / remove an item from a Python object
+---
+title: "``reticulate::py_del_item``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+##  Delete / remove an item from a Python object
+
 #### Description 
 Delete an item associated with a Python object, as through its __delitem__ method.
+
 #### Usage
 <pre><code>
 py_del_item(x, name)
@@ -12,5 +24,6 @@ py_del_item(x, name)
 
 #### Value
 The (mutated) object x, invisibly.
-See Also
+
+#### See Also
 Other item-related APIs: py_get_item, py_set_item
