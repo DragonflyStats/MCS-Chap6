@@ -1,10 +1,16 @@
+---
+title: "``reticulate::py_set_item``"
+output: html_document
+---
 
-py_set_item Set an item for a Python object
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+ Set an item for a Python object
 
 #### Description 
-Set an item on a Python object, similar to how x[name] = value might be used in Python code to
-set an item called name with value value on object x. The object’s __setitem__ method will be
-called.
+Set an item on a Python object, similar to how x[name] = value might be used in Python code to set an item called name with value value on object x. The object’s __setitem__ method will be called.
 
 #### Usage
 <pre><code>
