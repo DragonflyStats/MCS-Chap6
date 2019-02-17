@@ -1,9 +1,21 @@
+---
+title: "``reticulate::py_set_attr``"
+output: html_document
+---
 
-py_set_attr Set an attribute of a Python object
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
 #### Description 
+
 Set an attribute of a Python object
+
 #### Usage
+
+<pre><code>
 py_set_attr(x, name, value)
+</code></pre>
 
 #### Arguments
 * x Python object
