@@ -1,16 +1,26 @@
-10 py_func
-py_discover_config Discover the version of Python to use with reticulate.
+---
+title: "``reticulate::py_discover_config ``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+Discover the version of Python to use with reticulate.
 #### Description 
 This function enables callers to check which versions of Python will be discovered on a system as
 well as which one will be chosen for use with reticulate.
 #### Usage
+<pre><code>
 py_discover_config(required_module = NULL, use_environment = NULL)
+</code></pre>
+
 #### Arguments
 
-required_module
-A optional module name that must be available in order for a version of Python
-to be used.
-use_environment
-An optional virtual/conda environment name to prefer in the search
-Value
+* required_module : A optional module name that must be available in order for a version of Python to be used.
+* use_environment : An optional virtual/conda environment name to prefer in the search
+
+#### Value
 Python configuration object.
