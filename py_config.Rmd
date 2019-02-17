@@ -1,8 +1,21 @@
-py_config 9
-py_config Python configuration
+---
+title: "``reticulate::py_config``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+Python configuration
+
 #### Description 
+
 Information on Python and Numpy versions detected
+
 #### Usage
+
 <pre><code>
 py_config()
 </code></pre>
