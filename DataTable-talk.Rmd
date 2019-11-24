@@ -1,0 +1,344 @@
+<b><u>R Tutorial: Data.Table</u></b></span></h2>
+
+<p>Data.table is an extension of data.frame package in R. It is widely used for fast aggregation of large datasets, low latency add/update/remove of columns, quicker ordered joins, and a fast file reader. The syntax for data.table is flexible and intuitive and therefore leads to faster development. Some of the other notable features of data.tables are its fast primary ordered indexing and its automatic secondary indexing, this is complemented by a memory efficient combined join and group by.</p>
+
+<p>The syntax for using a data.table is mentioned below:</p>
+
+<pre>
+DT[where, select|update|do, by]</pre>
+
+<p>This tutorial series is about the data.table package in R that is used for Data Analysis. It is an ideal package for dataset handing in R. This tutorial contains techniques to create, subset and select a data.table, following by usage of various functions and operations on rows and columns; including chaining, indexing, etc.</p>
+
+<h3><strong>Creating Data.Table</strong></h3>
+
+<p style="margin-left:-.25pt;">If you have created a data.frame before, you could recall that it is done by using the function data.frame():</p>
+
+<pre>
+<code>&gt; DF = data.frame(x=c("b","b","b","a","a"),v=rnorm(5))
+&gt; DF
+x      v
+b   -0.1758447
+b   -1.1006405
+b   1.2296532
+a   -1.7714559
+a   -0.2651259</code></pre>
+
+<ol>
+</ol>
+
+<p style="margin-left:-.25pt;">A data.table is created in exactly the same way:</p>
+
+<pre>
+<code>&gt; DT = data.table(x=c("b","b","b","a","a"),v=rnorm(5))
+&gt; DT
+   x      v
+1: b   0.7693975
+2: b   2.6219549
+3: b   0.6689401
+4: a   0.7741039
+5: a   0.4980158</code></pre>
+
+<p style="margin-left:-.25pt;">Observe that a data.table prints the row numbers with a colon so as to visually separate the row number from the first column. We can easily convert existing data.frame objects to data.table.</p>
+
+<pre>
+<code>&gt; MOTOR = data.table(vehicle)
+&gt; head(MOTOR)
+   speed    dist
+1:  4         2
+2:  4        10
+3:  7         4
+4:  7        22
+5:  8        16
+6:  9        10
+</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">We have just created two data.tables: DT and MOTORS. It is often useful to see a list of all data.tables in memory:</p>
+
+<pre>
+<code>&gt; tables()
+     NAME   NROW  NCOL  MB  COLS
+[1,] MOTORS  50    2    1    speed,dist
+[2,] DT      5     2    1    x,v
+Total: 2MB</code></pre>
+
+<p style="margin-left:-.75pt;">The MB column is useful to quickly assess memory use and to spot if any redundant tables can be removed to free up memory. Just like data.frames, data.tables must fit inside RAM.&nbsp;Some users regularly work with 20 or more tables in memory, rather like a database. The result of tables() is itself a data.table, returned silently, so that tables() can be used in programs. Tables() is unrelated to the base function table(). To see the column types :</p>
+
+<pre>
+<code>&gt; sapply(DT,class)
+x              v
+"character"    "numeric"</code></pre>
+
+<p style="margin-left:-.75pt;">You may have noticed the empty column KEY in the result of tables() above.</p>
+
+<h3><strong>Keys</strong></h3>
+
+<p style="margin-left:-.25pt;">Let&rsquo;s start by considering data.frame, specifically rownames. We know that each row has exactly one row name. However, a person (for example) has at least two names, a first name and a second name. It&rsquo;s useful to organise a telephone directory sorted by surname then first name.&nbsp;In data.table, a <em>key </em>consists of one <em>or more </em>columns. These columns may be integer, factor or numeric as well as character. Furthermore, the rows are sorted by the key. Therefore, a data.table can have at most one key because it cannot be sorted in more than one way. We can think of a key as like super-charged row names; i.e., mult-column and multi-type.</p>
+
+<p style="margin-left: -0.25pt; text-align: center;"><strong><a href="https://goo.gl/gIdd5r" target="_blank">Learn Data Science</a> by working on interesting <a href="https://goo.gl/NYkDlh" target="_blank">Data Science Projects</a> for just $9</strong></p>
+
+<p align="left">Uniqueness is not enforced; i.e., duplicate key values are allowed. Since the rows are sorted by the key, any duplicates in the key will appear consecutively. Let&rsquo;s remind ourselves of our tables:</p>
+
+<pre>
+<code>&gt; tables()
+     NAME   NROW  NCOL  MB  COLS
+[1,] MOTORS  50    2    1    speed,dist
+[2,] DT      5     2    1    x,v
+Total: 2MB
+&gt; DT = data.table(x=c("b","b","b","a","a"),v=rnorm(5))
+&gt; DT
+   x      v
+1: b   0.7693975
+2: b   2.6219549
+3: b   0.6689401
+4: a   0.7741039
+5: a   0.4980158</code></pre>
+
+<p style="margin-left:15.45pt;">No keys have been set yet.</p>
+
+<pre>
+<code>&gt; DT[2,]    # select row 2
+   x    v
+1: b    2.621955
+&gt; DT[x=="a",]    # select rows where column x == "a"
+   x    v
+1: a   0.7741039
+2: a   0.4980158</code></pre>
+
+<p style="margin-left:-.75pt;">Aside: notice that we did not need to prefix x with DT$x. In data.table queries, we can use column names as if they are variables directly.&nbsp;But since there are no rownames, the following does not work:</p>
+
+<pre>
+<code>&gt; cat(try(DT["a",],silent=TRUE))
+Error in ‘[.data.table‘(DT, "a", )</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">When i is a data.table (or character vector), x must be keyed (i.e. sorted, and, marked as sorte The error message tells us we need to use setkey():</p>
+
+<pre>
+<code>&gt; setkey(DT,x)
+&gt; DT
+   x    v
+1: a    0.7741039
+2: a    0.4980158
+3: b    0.7693975
+4: b    2.6219549
+5: b    0.6689401</code></pre>
+
+<p style="margin-left:-.75pt;">Notice that the rows in DT have now been re-ordered according to the values of x. The two &quot;a&quot; rows have moved to the top. We can confirm that DT does indeed have a key using haskey(), key(), attributes(), or just running tables().</p>
+
+<pre>
+<code>&gt; tables()
+     NAME   NROW  NCOL  MB  COLS
+[1,] MOTORS  50    2    1    speed,dist
+[2,] DT      5     2    1    x,v
+Total: 2MB</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">Now that we are sure DT has a key, let&rsquo;s try again:</p>
+
+<pre>
+<code>&gt; DT["a"]
+   x    v
+1: a   0.7741039
+2: a   0.4980158</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">By default all the rows in the group are returne<font size="1"><span style="line-height: 14.4444px;">d.&nbsp;</span></font>The mult&nbsp;argument (short for <em>multiple</em>) allows the first or last row of the group to be returned instead.</p>
+
+<pre>
+<code>&gt; DT["a", mult="first"]
+   x    v
+1: a   0.7741039
+&gt; DT["a", mult="last"]
+   x    v
+2: a   0.4980158</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">Note: The comma between the arguments&nbsp;is optional.</p>
+
+<p align="left" style="margin-left:-.25pt;">Let&rsquo;s now create a new data.frame. We will make it large enough to demonstrate the difference between a <em>vector scan </em>and a <em>binary search</em>.</p>
+
+<pre>
+<code>&gt; grpsize = ceiling(1e7/26^2) # 10 million rows, 676 groups
+[1] 14793
+&gt; tt=system.time( DF &lt;- data.frame(
++ x=rep(LETTERS,each=26*grpsize),
++ y=rep(letters,each=grpsize),
++ v=runif(grpsize*26^2),
++ stringsAsFactors=FALSE)
+)
+user system elapsed
+0.448 0.008 0.457
+&gt; head(DF,3)
+x  y    v
+A  a    0.5310106
+A  a    0.1980941
+A  a    0.8835322
+&gt; tail(DF,3)
+x  y    v
+Z  z    0.6231946
+Z  z    0.4410910
+Z  z    0.9604099
+&gt; dim(DF)
+[1] 10000068    3</code></pre>
+
+<p style="margin-left:-.75pt;">We might say that R has created a 3 column table and <em>inserted </em>10,000,068 rows. It took 0.457 secs, so it inserted 21,881,986 rows per second. This is normal in base R. Notice that we set stringsAsFactors=FALSE. This makes it a little faster for a fairer comparison, but feel free to experiment.&nbsp;Let&rsquo;s extract an arbitrary group from DF:</p>
+
+<pre>
+<code>&gt; tt=system.time(ans1 &lt;- DF[DF$x=="R" &amp; DF$y=="h",]) # ’vector scan’
+user system elapsed
+0.528 0.016 0.544
+&gt; head(ans1,3)
+x  y    v
+R  h    0.7437625
+R  h    0.5702467
+R  h    0.3618726
+&gt; dim(ans1)
+[1] 14793    3</code></pre>
+
+<p align="left" style="margin-left:-.25pt;">Now convert to a data.table and extract the same group:</p>
+
+<pre>
+<code>&gt; DT = as.data.table(DF)   # It is recommended to use fread() or data.table() directly
+&gt; system.time(setkey(DT,x,y)) # one-off cost
+user system elapsed
+0.052 0.000 0.052
+&gt; ss=system.time(ans2 &lt;- DT[list("R","h")]) # binary search
+user system elapsed
+0.004 0.000 0.001
+&gt; head(ans2,3)
+   x  y    v
+1: R  h    0.7437625
+2: R  h    0.5702467
+3: R  h    0.3618726
+&gt; dim(ans2)
+[1] 14793    3
+&gt; identical(ans1$v, ans2$v)
+[1] TRUE</code></pre>
+
+<p style="margin-left:-.75pt;">At 0.001 seconds, this was <strong>544 </strong>times faster than 0.544 seconds, and produced precisely the same result. If you are thinking that a few seconds is not much to save, it&rsquo;s the relative speedup that&rsquo;s important. The vector scan is linear, but the binary search is O(log n). It scales. If a task taking 10 hours is sped up by 100 times to 6 minutes, that is significant.&nbsp;We can do vector scans in data.table, too.</p>
+
+<pre>
+<code>&gt; system.time(ans1 &lt;- DT[x=="R" &amp; y=="h",]) # Not so efficient use of data.table
+user system elapsed
+0.464 0.016 0.479
+&gt; system.time(ans2 &lt;- DF[DF$x=="R" &amp; DF$y=="h",]) # the data.frame way
+user system elapsed
+0.536 0.008 0.543
+&gt; mapply(identical,ans1,ans2)
+x     y     v
+TRUE  TRUE  TRUE</code></pre>
+
+<p style="margin-left:-.75pt;">If the phone book analogy helped, the <strong>544 </strong>times speedup should not be surprising. We use the key to take advantage of the fact that the table is sorted and use binary search to find the matching rows.&nbsp;When we used x==&quot;R&quot; we <em>scanned </em>the entire column x, testing each and every value to see if it equalled &rdquo;R&rdquo;. We did it again in the y column, testing for &rdquo;h&rdquo;. Then &amp; combined the two logical results to create a single logical vector which was passed to the [ method, which in turn searched it for TRUE and returned those rows. These were <em>vectorized </em>operations. They occurred internally in R and were very fast, but they were scans. <em>We </em>did those scans because <em>we </em>wrote that R code.</p>
+
+<p style="margin-left:-.75pt;">When i is a list (and data.table is a list too), we say that we are <em>joining</em>. In this case, we are joining DT to the 1 row, 2 column table returned by list(&quot;R&quot;,&quot;h&quot;). Since we do this a lot, there is an alias for list: .().</p>
+
+<pre>
+<code>&gt; identical( DT[list("R","h"),],
++ DT[.("R","h"),])
+[1] TRUE</code></pre>
+
+<p style="margin-left:-.75pt;">Both vector scanning and binary search are available in data.table, but one way of using data.table is much better than the other.&nbsp;The join syntax is a short, fast to write and easy to maintain. Passing a data.table into a data.table subset is analogous to A[B] syntax in base R where A is a matrix and B is a 2-column matrix<font size="1"><span style="line-height: 14.4444px;">.&nbsp;</span></font>In fact, the A[B] syntax in base R inspired the data.table package. There are other types of ordered joins and further arguments which are beyond the scope of this quick introduction.</p>
+
+<p style="margin-left:-.75pt;">The merge method of data.table is very similar to X[Y], but there are some differences.&nbsp;This first section has been about the first argument inside DT[...], namely i. The next section is about the 2nd and 3rd arguments of data.table: j and by.</p>
+
+<p style="margin-left: -0.75pt; text-align: center;"><a href="https://www.dezyre.com/data-science-in-R-programming-online-training/37?from=tdatatable1sgb"><img alt="" src="http://s3.amazonaws.com/files.dezyre.com/images/blog/Marketing+Banners+for+Blogs/Work-on-hands-on-projects-in-big-data-and-data-science.jpg" style="width: 550px; height: 72px;" /></a></p>
+
+<h3><strong>Fast grouping using j and by</strong></h3>
+
+<p style="margin-left:-.25pt;">The second argument to DT[...] is j and may consist of one or more expressions whose arguments are (unquoted) column names, as if the column names were variables. Just as we saw earlier in i as well.</p>
+
+<pre>
+<code>&gt; DT[,sum(v)]
+[1] 4999637</code></pre>
+
+<p style="margin-left:-.75pt;">When we supply a j expression and a &rsquo;by&rsquo; expression, the j expression is repeated for each &rsquo;by&rsquo; group.</p>
+
+<pre>
+<code>&gt; DT[,sum(v),by=x]
+    x    V
+1:  A    192213.2
+2:  B    192183.3
+3:  C    192601.7
+4:  D    192308.0
+5:  E    192428.5
+6:  F    192071.0
+7:  G    192403.8
+8:  H    192423.9
+9:  I    192024.5
+10: J    192063.1
+11: K    192340.2
+12: L    192421.5
+13: M    192470.2
+14: N    192045.5
+15: O    192166.7
+16: P    192459.4
+17: Q    192307.1
+18: R    192288.1
+19: S    192274.7
+20: T    192380.5
+21: U    192191.0
+22: V    192170.7
+23: W    192257.5
+24: X    192401.6
+25: Y    192429.4
+26: Z    192312.4</code></pre>
+
+<p style="margin-left:15.45pt;">The by in data.table is fast. Let&rsquo;s compare it to tapply.</p>
+
+<pre>
+<code>&gt; ttt=system.time(tt &lt;- tapply(DT$v,DT$x,sum)); ttt
+user system elapsed
+0.704 0.064 0.767
+&gt; sss=system.time(ss &lt;- DT[,sum(v),by=x]); sss
+user system elapsed
+0.080 0.000 0.078
+&gt; head(tt)
+A          B          C          D          E          F
+192213.2   192183.3   192601.7   192308.0   192428.5   192071.0
+&gt; head(ss)
+   x    V1
+1: A    192213.2
+2: B    192183.3
+3: C    192601.7
+4: D    192308.0
+5: E    192428.5
+6: F    192071.0
+&gt; identical(as.vector(tt), ss$V1)
+[1] TRUE</code></pre>
+
+<p style="margin-left:15.45pt;">At 0.078 sec, this was 10<strong>&nbsp;</strong>times faster than 0.767 sec, and produced precisely the same result. Next, let&rsquo;s group by two columns:</p>
+
+<pre>
+<code>&gt; ttt=system.time(tt &lt;- tapply(DT$v,list(DT$x,DT$y),sum)); ttt
+user system elapsed
+1.076 0.080 1.155
+&gt; sss=system.time(ss &lt;- DT[,sum(v),by="x,y"]); sss
+user system elapsed
+0.104 0.000 0.106
+&gt; tt[1:5,1:5]
+a          b          c          d          e
+
+7382.299   7424.815   7345.469   7347.148   7356.512
+7360.890   7383.625   7348.990   7381.238   7430.159
+7432.864   7433.346   7398.234   7429.309   7406.106
+7387.108   7398.470   7390.907   7402.977   7393.608
+7399.820   7435.018   7374.863   7396.102   7399.262
+&gt; head(ss)
+   x y    V1
+1: A a    7382.299
+2: A b    7424.815
+3: A c    7345.469
+4: A d    7347.148
+5: A e    7356.512
+6: A f    7411.005
+&gt; identical(as.vector(t(tt)), ss$V1)
+[1] TRUE</code></pre>
+
+<p style="margin-left:15.45pt;">This was <strong>10 </strong>times faster, and the syntax is a little simpler and easier to read.</p>
+
+<h3><strong>Fast ordered joins</strong></h3>
+
+<p style="margin-left:-.25pt;">This is also known as last observation carried forward (LOCF) or a <em>rolling join</em>.</p>
+
+<p style="margin-left:-.75pt;">Recall that X[Y] is a join between data.table X and data.table Y. If Y has 2 columns, the first column is matched to the first column of the key of X and the 2nd column to the 2nd. An equi-join is performed by default, meaning that the values must be equal. Instead of an equi-join, a rolling join is :</p>
+
+<pre align="left" style="margin-left: 15.45pt;">
+X[Y,roll=TRUE]</pre>
+
+<p style="margin-left:-.75pt;">As before the first column of Y is matched to X where the values are equal. The last join column in Y though, the 2nd one in this example, is treated specially. If no match is found, then the row before is returned, provided the first column still matches.&nbsp;Further controls are rolling forwards, backwards, nearest and limited staleness.</p>

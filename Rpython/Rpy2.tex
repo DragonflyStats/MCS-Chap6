@@ -1,0 +1,272 @@
+%-----------------------------------------------------------------------------%
+%http://www.daimi.au.dk/~besen/TBiB2007/lecture-notes/rpy.html
+\section{Rpy}
+
+Python is a powerful programming language, but occasionally we need to solve problems that can more easily be solved in other, more specialised, programming languages.
+
+For statistical analysis and data visualisation, the programming language R, is an excellent choice. But where R is a very strong language for mathematical (numerical) computation and statistics, it is rather cumbersome to perform typical scripting tasks with it.
+
+Ideally, we would want to use Python for the scripting tasks and R for the statistical tasks. And for once, we can actually get the best of both worlds by combining the two languages.
+
+Integrating Python and R is particularly simple due to the rpy module, that essentially embeds R as a module in Python.
+
+In this lecture we will see a few examples of how to use RPy to communicate with R from Python. We will not go into many details, however, since R programming is outside the scope of this class, but after reading this lecture note, you should be able to use RPy after learning R programming.
+
+
+\subsection{Rpy:Invoking RPy}
+
+To use RPy all you need to do is to import the rpy module.
+
+Well, theoretically...
+
+RPy is not globally installed at DAIMI, so to use it, you need a local installation, and you then need to tell Python where it can be found.
+
+There is a version of RPY installed at /users/compbio/Applications/R231py/rpy/lib/python/ and to inform Python of this, you need to set the PYTHONPATH environment variable.
+
+$ export PYTHONPATH=/users/compbio/Applications/R231py/rpy/lib/python/:$PYTHONPATH
+in BASH or
+
+$ setenv PYTHONPATH /users/compbio/Applications/R231py/rpy/lib/python/:$PYTHONPATH
+in TCSH.
+
+After this, it is as simple as importing rpy.
+
+import rpy
+The communication with R is all through an object called r in this module, so for convenience we can just load that object into our namespace this way:
+
+from rpy import r
+and after this, we can talk to R through r.
+
+
+\subsection{Rpy: Talking to R}
+
+The r object essentially works like the R prompt if you run R directly. We can execute R code in two different ways using r: we can tread it as a function that takes R code as input:
+
+>>> r('x <- c(1,2,3)')
+[1.0, 2.0, 3.0]
+>>> r('x')
+[1.0, 2.0, 3.0]
+>>> r('x*x')
+[1.0, 4.0, 9.0]
+or, when accessing functions or variables, just pretend that they are attributes of the r object:
+
+>>> r('x <- c(1,2,3)')
+[1.0, 2.0, 3.0]
+>>> r.x
+where the later is what we will typically use.
+
+Don't confuse this way of accessing r with real attributes, though. There is magic happening behind the scene for this to work. So do not try to create R object by assigning to r attributes like this:
+
+>>> r('x <- c(1,2,3)')
+[1.0, 2.0, 3.0]
+>>> r.x
+[1.0, 2.0, 3.0]
+>>> r.x = [3,2,1]
+>>> r.x
+[3, 2, 1]
+>>> r('x')
+[1.0, 2.0, 3.0]
+You can access the variables in R through an attribute in r, but if you assign an attribute to r you overwrite the magic without assigning variables on the R side.
+
+Just don't do it.
+
+If you really need to assign a parameter on the R side of r � and mind you, mostly you should be able to just pass values over to R through function parameters � you can use the assign value:
+
+>>> del r.x
+>>> r.assign('x', range(1,6))
+>>> r('x')
+[1, 2, 3, 4, 5]
+Here, the first line is necessary because the values are cached on the Python side, so updating the R side will not necessarily update the Python side. Whenever r.attribute differs from r(attribute), the first is what Python sees and the second what R sees. Delete the first to invalidate the cache, and the next access to the attribute will fetch the current value from R.
+
+
+\subsection{Rpy: Python and R names}
+
+Web-resources:
+R objects look up.
+The naming convention in Python and R � not to mention the set of legal names � differs. Therefore, there is some name changing going on when we look up R objects as attributes of r.
+
+For example, where we in python would call a function t_test, the R convention would be to use . (dot) instead of _ (underscore) and therefore use t.test (something that wouldn't work in Python where dot has a different meaning).
+
+Attribute lookup therefore performs name modification in addition to its other magic, and changes "_" to ".", "__" to "<-" and removes a final underscore if it is preceded by a letter. The last change is needed when you want to look up a name in R that is a reserved keyword in python, such as print.
+
+If you really need to, you can also use r["name"] to look up "name", but this is usually only needed when accessing special character names in R, so we won't bother with it here.
+
+\subsection{Rpy: R and graphics}
+
+Web-resources:
+Plotting with RPy.
+But enough about technicalities, let us get a feeling for RPy by writing some actual code.
+
+We start with plotting data. The R function for plotting simple x-y data is called plot(), so to call it from Python we use r.plot().
+
+from rpy import r
+
+x = range(1,11)
+y = [i**2 for i in x]
+r.plot(x,y)
+This just plots points at the x-y coordinates. The x and y label looks a bit strange, but this is because the function doesn't know what to call the variables. In R it would know the names of the variables (x and y), but through Python it doesn't. We can fix that, though, using the xlab and ylab parameters:
+
+r.plot(x,y, xlab='x', ylab='y')
+We can set a title on the plot using the main parameter:
+
+r.plot(x,y, xlab='x', ylab='y', main='My first plot')
+Colours we can set with the col parameter; the type of point with the pch parameter; and where applicable, we can set the background colour in the points with the bg option:
+
+r.plot(x,y, xlab='x', ylab='y', main='My first plot',
+       pch=21, col='blue', bg='lightblue')
+We can change the type of plots between points, lines, or both using type with parameters "p" (points), "l" (lines), or "o"/"b" (both lines and points � the difference is in whether there should be white space around the points, "b", or not "o").
+
+r.plot(x,y, xlab='x', ylab='y', main='My first plot',
+       pch=21, col='blue', bg='lightblue', type='o')
+Exercise RPY.1: Plot a sine curve in red. You can use the math module to calculate sin(x).
+
+If you use the plot() function this way, you only plot one set of x-y values. But you can extend a plot using e.g. the points() or lines() functions:
+
+from rpy import r
+
+x = range(1,11)
+y = [i**2 for i in x]
+z = [i**3 for i in x]
+r.plot(x, y, main='My second plot', xlab='x', ylab='y', type='l', col='blue')
+r.lines(x, z, col='red')
+Exercise RPY.2: Plot a sine curve in red and a cosine in blue.
+
+When plot() is called, it calculates the right x and y range to fit the data on the plot. This is usually what we want, but if we add lines or points afterwards, there is a chance that they do not fit unto the plotting area. To change that, we can use the xlim or ylim parameters. A useful function in this setting is the range function that calculates the minimum and maximum value of a set:
+
+from rpy import r
+
+x = range(1,11)
+y = [i**2 for i in x]
+z = [i**3 for i in x]
+r.plot(x, y, main='My second plot', xlab='x', ylab='y', type='l', col='blue',
+       ylim=r.range(y,z))
+r.lines(x, z, col='red')
+Another, very useful, graphics function is hist that simply plots histograms of data. You can specify most of the same graphical parameters as for plot() � x and y label, main title, etc. � but instead of x-y plots it draws a histogram from a set of values:
+
+x = range(10) + range(3,6) + range(5,10)
+r.hist(x, main='A histogram', xlab='x', col='lightblue')
+If we just plot as up till now, we will get the result in an X window. We can send it to a file instead using e.g. the png() function � for bitmap PNG format � or pdf() � for PDF.
+
+from rpy import r
+
+x = range(1,11)
+y = [i**2 for i in x]
+z = [i**3 for i in x]
+r.png('output.png')
+r.plot(x, y, main='My second plot', xlab='x', ylab='y', type='l', col='blue',
+       ylim=r.range(y,z))
+r.lines(x, z, col='red')
+r.dev_off()
+The last line here closes the file we are writing the graphics to. Remember it, or the result might not be what you expect.
+
+Random numbers
+
+We can also use R to draw random numbers from a number of distributions; more than what is found in Python's own random module.
+
+For example, to draw 10 values normally distributed around 5, with standard deviation 2, we can use
+\begin{verbatim}
+>>> r.rnorm(10, 5, 2)
+[6.7150808154286139, 5.2738028583167056, 9.0179668220672049, 4.7356799411661843,
+ 10.319115043313923, 6.0269456261401189, 6.202591941969164, 6.2693086446789845,
+ 3.9972304190859029, 6.1397916729681894]
+\end{verbatim}
+The first r in rnorm() stands for "random" and indicates that we want to sample random variables. If, instead, we want the density for a list of numbers, we can use dnorm:
+
+>>> x = r.rnorm(10, 5, 2)
+>>> r.dnorm(x, 5, 2)
+[0.19429492373082802, 0.13648115130021901, 0.042525169715743855,
+0.19136814419427944, 0.19502317173164863, 0.18358409741439988,
+0.15662630562393501, 0.092292520327179856, 0.19700227745047683,
+0.12158235704154224]
+Similarly, qnorm() gives us the value corresponding to a quantile (for a given q, the value x, such that P(N <= x) = q) and pnorm gives us the probability (for given x, the value q, such that P(N <= x) = q).
+%-----------------------------------------------------------------------------%
+\newpage
+Exercise RPY.3: Draw random values from a normal distribution and plot them using hist().
+
+We can use this to simulate random noise around a deterministic function. That is, define some function y of x and simulate points t = y(x) + e where e is normally distributed with mean 0.
+
+x = r.runif(50,0,1)                              # 50 uniform x values
+y = [2*i + 3 for i in x]                         # deterministic y values
+t = [i + r.rnorm(1,0,1) for i in y]              # noisy t values
+r.plot(x, t, main='Noisy plot', ylab='y', xlab='x', ylim=r.range(y,t),
+       col='blue', pch=20)
+r.lines(x, y, col='red')
+Exercise RPY.4: Generate various y functions and add noise around them. Plot the functions together with the noisy data points.
+
+You get the residuals � the noise part of the data points � as t-y
+
+res = [i-j for i,j in zip(t,y)]
+Exercise RPY.5: Collect residuals from some of your simulations and plot them with hist(). Compare the results with RPY.3.
+
+\subsection{Fitting linear models}
+
+Web-resources:
+Notes from Peter Cock.
+We can also use R to do statistical modelling and model checking.
+%Rpy
+For data like the data we just simulated, linear normal models are appropriate.
+
+This essentially just means coming up with a mapping from x to y, by mapping x to some linear combination of functions and then estimating the scalars of this combination.
+
+If we believe there is a linear relationship between x and y, we map x to a combination of w0*1 and w1x and then estimate the best choices of w by least square fitting.
+
+If we believe there is a quadratic relationship between x and y, we map x to a combination of w0*1, w1x, and w2x2, and then estimate the best choices of w by least square fitting.
+
+The function \texttt{lsfit} does exactly this. It takes two input values, the model specification, let's call it phi, and the target values, the t values from above.
+
+The model specification, phi, is a matrix with a row per data point and a column per basis vector. I.e. to fit a linear function with an intercept and a gradient, we need two columns, one that is constant 1 � for the intercept � and one that is just the x value.
+
+For simple linear regression, though, we can just use the x values, since lsfit by default includes the intercept, so the following two model fitting gives the same result:
+
+from rpy import r
+
+x = r.runif(50,0,1)
+y = [.1*i**2 + 3*i - 2 for i in x]
+t = [i + r.rnorm(1) for i in y]
+
+# use default that automatically includes intercept
+phi = x
+w1 = r.lsfit(phi, y)['coefficients']
+
+# explicitly construct model matrix
+phi = r.matrix(0.0, nrow=len(x), ncol=2)
+for i,xval in enumerate(x):
+    phi[i][0] = 1                       # intercept
+    phi[i][1] = xval                    # x value
+w2 = r.lsfit(phi, y, intercept=False)['coefficients']
+
+assert w1['Intercept'] == w2['X1']      # intercept is the same
+assert w1['X'] == w2['X2']              # gradient is the same
+For more complex model specifications, like second order polynomials, we need the matrix for:
+
+from rpy import r
+
+x = r.runif(50,0,10)
+true_w = [-2, 3, .1]
+y = [true_w[0] + true_w[1]*i + true_w[2]*i**2 for i in x]
+t = [i + r.rnorm(1,0,10) for i in y]
+
+phi = r.matrix(0.0, nrow=len(x), ncol=2)
+for i,xval in enumerate(x):
+    phi[i][0] = xval                    # x value
+    phi[i][1] = xval**2                 # x^2 value
+w = r.lsfit(phi, y)['coefficients']
+
+print 'Intercept:', true_w[0], w['Intercept']
+print 'First order coeficient:', true_w[1], w['X1']
+print 'Second order coeficient:', true_w[2], w['X2']
+But notice that we can still use the implicit intercept.
+
+Exercise RPY.6: Use your functions from RPY.4 and try to estimate your parameters. Plot both the true and the estimated functions. Also, try to fit the data to incorrect functions and plot the results (i.e. try fitting second order polynomials to lines or third order polynomials).
+
+Exercise RPY.7: Collect residuals for your estimated functions and plot the histograms.
+
+Summary
+
+We have learnt how to communicate with R from Python through the rpy module. This brings the power of R into our hands with very little effort from us.
+
+Of course, this power is only fully realized when we know what kind of computation tasks are easy to do in R, but that is a topic for a completely different class.
+
+Since an exercise in RPy would almost necessarily involve some more R knowledge � and since I know that you haven't finished your web-programming exercises � there won't be an exercise this week.
+
+However, this does not mean that RPy won't show up in a mandatory project somewhere down the line...
