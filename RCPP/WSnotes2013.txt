@@ -1,0 +1,157 @@
+R vocacbulary
+
+--------------------
+
+which()
+Position()
+next - control
+seq_along
+--------------------
+
+Scalar Function
+Vectorized Function
+
+VEctorized Equivalents
+ - if ifelse
+ - max pmax
+ - min pmin
+--------------------
+
+Cpp - pred()
+
+--------------------
+
+str(1)  # numeric
+str(1L) # integer
+
+--------------------
+
+What does Rcpp do for you?
+--------------------
+
+x <- 1
+y <- 1L
+
+is.numeric(x)
+is.numeric(y)
+is.integer(x)
+is.double(y)
+
+
+--------------------
+
+cppFunction(' int two()
+ {
+ return 2;
+ }')
+
+
+-------------------
+
+cppFunction(' double wmean(NumericVector x,  NumericVector w)
+ {
+ int n=x.size();
+
+ if (w.size() 1= n)
+   {
+   stop("x and w are not the same size")
+   }
+ double Total = 0 ;
+ double Total_w = 0 ; 
+ 
+ for (i=0, i< n,++i)
+    {
+    total += ( x[i] * w[i]);
+    total += w[i];	
+
+
+    }
+ temp = total/total_w
+ return(temp)
+ }')
+
+--------------------------
+
+Cpp is Zero Indexed
+Cpp use the assignment operator
+
+--------------------------
+
+
+# Sequential Differences in CPP
+
+cppFunction(' NumericVector diff (NumericVector x)
+ {
+ int n = x.size();
+
+ NumericVector out(n-1);
+ 
+ 
+ for (int i=1, i<n ,++i)
+    {
+    out[i-1] = x[i] - x[i-1];
+    }
+ return(out);
+ }')
+
+#--------------------------------------------
+
+
+# meanC
+
+cppFunction('double meanC (NumericVector x)
+ { 
+ int n = x.size();
+ double avg = 0;
+ 
+ avg = sum(x)/n;
+ return(avg);
+ }
+  ')
+
+
+#--------------------------------------------
+# VarC
+
+cppFunction('double varC (NumericVector x)
+ { 
+ int n = x.size();
+ double varx = 0;
+ NumericVector xsq=0;
+ double xbar=0;
+
+ xbar = sum(x)/n;
+ xsq = pow(x,2);
+ varx = (sum(xsq) - sum(x))/(n-1);
+ return(varx);
+ }
+  ')
+
+#-------------------------------------------
+
+Case Studies
+
+Gibbs Sampler
+RLE
+
+#-------------------------------------------
+
+gibbs_r <- function(N, thin) {
+ mat <- matrix(nrow = N, ncol = 2)
+ x <- y <- 0
+ for (i in 1:N) {
+ for (j in 1:thin) {
+ x <- rgamma(1, 3, y * y + 4)
+ y <- rnorm(1, 1 / (x + 1), 1 / sqrt(2 * (x + 1)))
+ }
+ mat[i, ] <- c(x, y)
+ }
+ mat
+}
+
+#-------------------------------------------------
+
+RLE function
+Run Length Encoding
+
+#-------------------------------------------------

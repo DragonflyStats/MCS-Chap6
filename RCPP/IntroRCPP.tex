@@ -1,0 +1,211 @@
+\documentclass[]{article}
+\usepackage{amsmath}
+\usepackage{framed}
+
+%opening
+\title{Rcpp}
+\author{Romain Francois}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Rcpp combines the best of R with the best of C++.
+"R is fast for the human, C is fast for the computer".
+\end{abstract}
+
+%------------------------------------------------------------------- %
+\section{Why use C++?}
+Typical bottlenecks that \texttt{C++} can help with are:
+
+\begin{itemize}
+\item Loops that can't easily be vectorised because each iteration depends on the previous. \texttt{C++} modifies objects in place, so there is little overhead when modifying a data structure many times.
+
+\item Recursive functions, or problems which involve calling functions millions of times. The overhead of calling a function in \texttt{C++} is much lower than the overhead of calling a function in \texttt{R}. To give you some idea of the magnitude, on my computer when writing this book the overhead in \texttt{C++} was ~5ns compared to ~200ns for \texttt{R}.
+
+\item Problems that require advanced data structures and algorithms that \texttt{R} doesn't provide. Through the \textbf{standard template library} (STL), \texttt{C++} has efficient implementations of many important data structures, from ordered maps to double ended queues.
+\end{itemize}
+
+%------------------------------------------------------------------- %
+\newpage
+\section{Rcpp}
+\textit{\textbf{Rcpp}}, the \texttt{R} package that greatly facilitates \texttt{R} and \texttt{C++} integration. \textit{\textbf{Rcpp}} is increasingly important. Over 130 \texttt{R} packages now depend on \textbf{\textit{Rcpp}} and it is likely to keep growing. The following plot built using code Tal Galili posted to examine the log files from RStudio’s CRAN mirror shows the number of downloads of Rcpp around the time R 3.0.0 was released.
+
+The intense activity over the first three days and relatively slow tapering off is noteworthy, especially for what might be considered an “advanced” package that takes some expertise to use. So, it is not surprising that here have been quite a few conference presentations this year about some aspect or another of \textit{\textbf{Rcpp}}, and Dirk Eddelbuettel, Romain Francois and other experts seem to be hard pressed to keep up with the demand for training. 
+
+I had the opportunity last week at the useR 2013 conference in Spain to attend the tutorial on \textit{\textbf{Rcpp}} given by Hadley Wickham and Romain. 
+
+And, at roughly the same time that on the other side of the world, Dirk gave a similar tutorial to the Sydney Users of R Forum (SURF). 
+
+Romain and Hadley's tutorial was geared to people with some R skills, but not necessarily any C++ experience. It was very well done; exceptionally well done. 
+
+Hadley and Romain are two experienced trainers who are so good at what they do that they can quickly get a diverse group to a comfortable place where they can begin dealing with the material. The class was positive, challenging and very motivating.
+
+While I was sitting there, probably hallucinating in the Albacete heat, I had the thought the Rcpp phenomenon probably says something about the future of R. No, I don’t mean that Rcpp or C++ is the future. It occurred to me though that I was seening the results of how a small but committed group of R experts cooperated to deal with a potential threat to R’s continued success. To my way of thinking, this kind of sustained, creative effort and the willingness of R developers to connect R to the rest of the computational world indicates that R is likely to be the platform of choice for statistical computing some time to come.
+
+So what is the threat? It is not big not big news that R can be slow. The following code from Hadley and Romain's tutorial shows a straightforward C++ function to compute a simple weighted mean, a naïve implementation of this same function in R, and the built in weighted.mean() function from the base stats package.
+
+\begin{framed}
+\begin{verbatim}
+# Script to compare C++ and R
+library(Rcpp)
+ 
+# C++ Function in Rcpp wrapper
+cppFunction('
+double wmean(NumericVector x, NumericVector w) {
+int n = x.size();
+double total = 0, total_w = 0;
+for(int i = 0; i < n; ++i) {
+total += x[i] * w[i];
+total_w += w[i];
+}
+return total / total_w;
+}
+')
+ 
+# Naive R function
+wmeanR <- function(x, w) {
+  total <- 0
+  total_w <- 0
+  for (i in seq_along(x)) {
+    total <- total + x[i] * w[i]
+    total_w <- total_w + w[i]
+  }
+  total / total_w
+}
+ 
+x <- rnorm(100000000)
+w <- rnorm(100000000)
+ 
+system.time(wmean(x,w))
+ 
+system.time(wmeanR(x,w))
+ 
+# The proper way to compute a simple weighted mean in R
+# using a built in function from the base stats package
+system.time(weighted.mean(x,w))
+Created by Pretty R at inside-R.org
+\end{verbatim}
+\end{framed}
+On my laptop, the naïve R function took 229.47 seconds to run, the built in R function ran in 4.52 seconds, and the C++ function took only 0.28 seconds to execute. Yes, C++ is a lot faster. But, this is a somewhat contrived example and it is not unreasonable to expect that a statistician could spend her entire career running weighted.mean() on vectors of reasonable size and never even consider that R might be slower that something else. (For vectors of length 1,000,000, weighted.mean() took 0.06 seconds to run on my PC). Speed of execution needs to be evaluated in context. I can't imagine any statistician interuppting the flow of an R session to save a few seconds on a once-in-a-while calculation. However, it is nice to know that there is a reasonable way to proceed in R if the calculation needs to be done 100,000 times.
+
+My three main take-aways from my tutorial were;
+
+For garden variety programming (no objects or classes) C++ is not only accessible, but might also be fun.
+Rcpp along with RTools does an incredible amount of “heavy lifting”, hiding the details of working with a compiled language from the R user and providing a big league environment for writing high performance, R based code.
+Even if you have some considerable experience with R, it may turn out that R is even richer than you thought.
+It was a delightful surprise to realize that gaining some experience C++ might enhance one’s motivation to learn even more about R. Yes, it is important to know that one can attempt serious work in R that might have critical execution time constraints and that there are tools such as Rcpp available to help one power through bottlenecks. However, the richer experience of the tutorial was to consider the rewards of learning more about the structure of R and all R it has to offer.
+
+
+% http://dirk.eddelbuettel.com/papers/rcpp_workshop_introduction_user2012.pdf
+
+Since the core of R is in fact a program
+written in the C language, it’s not surprising
+that the most direct interface to non-R
+software is for code written in C, or directly
+callable from C. All the same, including
+additional C code is a serious step, with
+some added dangers and often a
+substantial amount of programming and
+debugging required. You should have a
+good reason
+Chambers (2008)
+
+
+%---------------------------------------------------------------------%
+\subsection{Benchmark}
+\begin{framed}
+\begin{verbatim}
+
+We can use this to introduce tools such as rbenchmark:
+# now load some tools
+library(rbenchmark)
+# now run the benchmark
+N <- 1e5
+benchmark(f(N,1), g(N,1), h(N,1), j(N,1), k(N,1),
+	columns=c("test", "replications",
+	"elapsed", "relative"),
+	order="relative", replications=10)
+
+\end{verbatim}
+\end{framed}
+
+
+%---------------------------------------------------------------------%
+
+The new Reference Classes which appeared with R 2.12.0 are
+particularly well suited for multi-lingual work. C++ (via Rcpp)
+was the ﬁrst example cited by John Chambers in a nice
+presentation at Stanford in the fall of 2010.
+
+
+%---------------------------------------------------------------------%
+
+\subsection{C++ for R programmers}
+
+C++ is a large and sometimes complicated language.
+We cannot introduce it in just a few minutes, but will will provide
+a number of key differences—relative to R which should be a
+common point of departure.
+So on the next few slides, we will highlight just a few key
+differences, starting with big-picture differene with between R
+and C/C++.
+One view we like comes from Meyers: C++ is a federation of
+four languages. We will also touch upon each of these four
+languages.
+
+\subsection{Preliminaries}
+\textbf{Rtools}\\
+\textbf{devtools}\\
+
+\subsection{A bit about C++}
+C++ is a programming language.
+
+
+%--------------------------------------------%
+\newpage
+\subsection{Data Types in C}
+
+\begin{itemize}
+\item \texttt{int}
+\item \texttt{double}
+\item \texttt{NumericVector}
+\end{itemize}
+%---------------------------------------------%
+%--------------------------------------------%
+\subsection{Attributes}
+
+. Attributes and their
+supporting functions include:
+\begin{itemize}
+\item \texttt{Rcpp::export} attribute to export a \texttt{C++} function to \texttt{R},
+\item \texttt{sourceCpp} function to source exported functions from a file,
+\item \texttt{cppFunction} and \texttt{evalCpp} functions for inline declarations and execution,
+\item \texttt{Rcpp::depends} attribute for specifying additional build dependencies for \texttt{sourceCpp}.
+\end{itemize}
+
+
+\begin{framed}
+\begin{verbatim}
+#include <Rcpp.h>
+
+using namespace Rcpp;
+// [[Rcpp::export]]
+NumericVector convolveCpp(NumericVector a, NumericVector b) {
+
+int na = a.size(), nb = b.size();
+int nab = na + nb - 1;
+NumericVector xab(nab);
+
+for (int i = 0; i < na; i++)
+    for (int j = 0; j < nb; j++)
+            xab[i + j] += a[i] * b[j];
+    return xab;
+}
+\end{verbatim}
+\end{framed}
+
+\end{document}
+
+
