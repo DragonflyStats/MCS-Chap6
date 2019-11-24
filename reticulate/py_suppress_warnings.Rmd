@@ -1,0 +1,24 @@
+---
+title: "Reticulate"
+author: "Kevin O'Brien"
+date: "5 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+py_suppress_warnings Suppress Python warnings for an expression
+#### Description 
+Suppress Python warnings for an expression
+#### Usage
+<pre><code>
+py_suppress_warnings(expr)
+</code></pre>
+#### Arguments
+expr Expression to suppress warnings for
+
+#### Value
+Result of evaluating expression

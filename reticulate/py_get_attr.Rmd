@@ -1,0 +1,25 @@
+---
+title: "``reticulate::py_get_attr``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Description 
+
+Get an attribute of a Python object
+
+#### Usage
+<pre><code>
+py_get_attr(x, name, silent = FALSE)
+</code></pre>
+
+#### Arguments
+* ``x``: Python object
+* ``name``: Attribute name
+* ``silent``: TRUE to return NULL if the attribute doesn't exist (default is FALSE which will raise an error)
+
+#### Value
+Attribute of Python object

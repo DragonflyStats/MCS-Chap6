@@ -1,0 +1,117 @@
+
+```{r}
+#load data
+DT <- fread("GB_full.csv")
+```
+Read 1714258 rows and 12 (of 12) columns from 0.189 GB file in 00:00:07
+
+It took only 7 seconds to read this file. Do try at your end.
+
+### 1. How to subset rows & columns?
+
+```{r}
+#subsetting rows
+sub_rows <- DT[V4 == "England" & V3 == "Beswick"]
+```
+
+```{r}
+#subsetting columns
+sub_columns <- DT[,.(V2,V3,V4)]
+```
+
+In a data table, columns are referred to as variables. Therefore, we don’t need to refer to variables as DT$column name, column name alone works just fine. 
+
+If you do DT[,c(V2,V3,V4)], it would return a vector of values. Using .() symbol, wraps the variables within list() and returns data table. In fact, every data table or data frame is a compilation of list of equal length and different data types. Isn’t it?
+
+Subsetting data can be done even faster setting keys in data table. Keys are nothing but supercharged rownames. A part of it has been demonstrated below.
+
+### 2. How to order variables in ascending or descending order?
+
+```{r}
+#ordering columns
+dt_order <- DT[order(V4, -V8)]
+```
+Order function is data table is much faster than base function ``order()``. 
+Reason being, order in data table uses radix order sort which impart additional boost. - sign results in descending order.
+
+### 3. How to add / update / delete a column or values in a data set?
+
+```{r}
+#add a new column
+DT[, V_New := V10 + V11]
+```
+
+We did not assign the results back to DT. This is because, := operator modifies the input object by reference. It results in shallow copies in R which leads to better performance with less memory usage. The result is return invisibly.
+```{r}
+#update row values
+DT[V8 == "Aberdeen City", V8 := "Abr City"]
+````
+
+With this line of code, we’ve updated Aberdeen City to Abr City in column V8.
+
+```{r}
+#delete a column
+DT [,c("V6","V7") := NULL ]
+```
+
+Check View(DT). We see that the data contains blank columns in the data set. It can be removed using the code above. In fact, all the three steps can be done in command as well. This is known as chaining of commands.
+```{r}
+DT[V8 == "Aberdeen City", V8 := "Abr City"][, V_New := V10 + V11][,c("V6","V7") := NULL]
+```
+
+### 4. How to compute functions on variables based on grouping a column?
+
+Let’s calculate mean of V10 variable on the bases of V4 (showing country).
+
+```{r}
+#compute the average
+DT[, .(average = mean(V1o)), by = V4]
+
+#compute the count
+DT[, .N, by = V4]
+```
+
+.N is a special variable in data.table used to calculate the count of values in a variable. If you wish to obtain the order of the variable specified with by option, you can replace by with keyby. keyby automatically orders  the grouping variable in ascending order.
+
+### 5. How to use keys for subsetting data ?
+
+keys in data table delivers incredibly fast results. We usually set keys on column names which can be of any type i.e. numeric, factor, integer, character. Once a key is set of a variable, it reorders the column observations in increasing order. 
+
+Setting a key is helpful, specially when you know that you need to make multiple computations on one variable.
+
+```{r}
+#setting a key
+setkey(DT, V4) 
+```
+Once, the key is set, we can subset any value from the key. For example:
+```{r}
+#subsetting England from V4
+DT[.("England")]
+```
+
+Once the key is set, we no longer need to provide the column name again and again. 
+If we were to look for multiple values in a column, we can write it as:
+
+```{r}
+DT[.(c("England", "Scotland"))]
+```
+Similarly, we can set multiple keys as well. This can be done using:
+```{r}
+setkey(DT, V3, V4)
+```
+We can again, subset value from these two columns simultaneously using:
+
+```{r}
+DT[.("Shetland South Ward","Scotland")]
+```
+There are several other modifications which can be done in the 5 steps demonstrated above. These 5 steps illustrated above will help you to perform the basic data manipulation tasks using data.table. To learn more, I would suggest you to start using this package in your every day R work. You’d face various hurdles and that’s where your learning curve would accelerate. You can also check the official data.table guide here.
+
+### End Notes
+
+This article is written to provide you a path using which you can easily deal with large data sets. No longer, you need to spend money on upgrading your machines, instead it’s time to upgrade your knowledge of dealing with such situations. 
+
+Apart from data.table, there are several other packages for parallel computing available. But, I don’t see any need to any other package for data manipulation, once you become proficient with data.table.
+
+In this article, I discussed about some important aspects which every beginner in R must know while working on large data sets. After data manipulation, the very next hurdle which comes is model building. With large data sets, packages like caret, random forest, xgboost takes a lot of time in computation. Has it occurred to you?
+
+I plan to provide an interesting solution in my post next week! Do let me know your pain points in dealing with large data stets. Did you like reading this article? Which other package do you use when dealing with large data sets? Drop your suggestions / opinions in the comments.

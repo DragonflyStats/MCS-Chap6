@@ -1,0 +1,30 @@
+---
+title: "Reticulate: py_get_item"
+author: "Kevin O'Brien"
+date: "5 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+py_get_item Get an item from a Python object
+#### Description 
+Retrieve an item from a Python object, similar to how x[name] might be used in Python code to
+access an item indexed by key on an object x. The object's __getitem__ method will be called.
+
+#### Usage
+<pre><code>
+py_get_item(x, key, silent = FALSE)
+</code></pre>
+
+#### Arguments
+* x A Python object.
+* key The key used for item lookup.
+* silent Boolean; when TRUE, attempts to access missing items will return NULL rather than throw an error.
+
+#### See Also
+Other item-related APIs: py_del_item, py_set_item
+

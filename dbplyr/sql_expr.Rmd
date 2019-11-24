@@ -1,0 +1,24 @@
+## ``sql_expr``: Generate SQL from R expressions
+
+#### Description 
+Low-level building block for generating SQL from R expressions. Strings are escaped; names become bare SQL identiﬁers. 
+User inﬁx functions have % stripped.
+
+#### Usage 
+<pre><code>
+sql_expr(x, con = sql_current_con())
+</code></pre>
+#### Arguments 
+
+* ``x``: A quasiquoted expression 
+* ``con``: An optional database connection to control the details of the translation. The default, NULL, generates ANSI SQL.
+
+#### Examples
+
+```{r}
+sql_expr(f(x + 1))
+sql_expr(f("x", "y")) 
+sql_expr(f(x, y))
+sql_expr(cast("x" %as% DECIMAL)) 
+sql_expr(round(x) %::% numeric)
+```

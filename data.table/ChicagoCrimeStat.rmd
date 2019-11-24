@@ -1,0 +1,81 @@
+<pre><code>
+install.packages("data.table")
+library(data.table)
+fname<-"ChiCrime.csv"
+fname
+
+URL <- "https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD"
+
+download.file(URL,fname)
+ChiCrime <- fread(fname)
+
+dim(ChiCrime)
+names(ChiCrime)
+
+</code></pre>
+
+
+
+
+
+%- https://www.r-bloggers.com/intro-to-the-data-table-package/
+
+### Chicago Crime Statistics
+Let’s look at a more realistic example. I have a file that relates to Chicago crime data that you can download if you wish (that is if you want to work this example). It is about 81 megabytes so it isn’t terribly large.
+
+```{r}
+url <- "http://steviep42.bitbucket.org/YOUTUBE.DIR/chi_crimes.csv"
+download.file(url,"chi_crimes.csv")
+
+```
+
+So you might try reading it in with the typical import functions in R such as read.csv which many people use as a default when reading in CSV files. I’m reading this file in on a five year old Mac Book with about 8 GB of RAM. Your speed may vary. We’ll first read in the file using read.csv and then use the fread function supplied by data.table to see if there is any appreciable difference
+```{r}
+system.time(df.crimes <- read.csv("chi_crimes.csv", header=TRUE,sep=","))
+
+```
+ ```{r}
+nrow(df.crimes)
+```
+ 
+### Now let's try ``fread``
+```{r}
+system.time(dt.crimes <- fread("chi_crimes.csv", header=TRUE,sep=","))
+ 
+#user system elapsed
+#1.045 0.037 1.362
+ 
+attributes(dt.crimes)$class # dt.crimes is also a data.frame
+#[1] "data.table" "data.frame"
+ 
+nrow(df.crimes)
+#[1] 334141
+ 
+dt.crimes[,.N]
+```
+That was a fairly significant difference. If the file were much larger we would see an even larger difference which for me is a good thing since I routinely read in large files hence fread has become a default for me even if I don’t wind up using the aggregation capability of the data.table package. Also note that the fread function returns a data.table object by default. Now let’s investigate some crime using some of the things we learned earlier.
+
+This data table has information on every call to the Chicago police in the year
+2013. So we’ll want to see what factors there are in the data frame/table so we can do
+some summaries across groups.
+```{r}
+names(dt.crimes)
+``` 
+ 
+Let's see how many unique values there are for each column. Looks like 30 FBI codes so maybe we could see the number of calls per FBI 
+code. What about District ? There are 25 of those.
+```{r}
+sapply(dt.crimes,function(x) length(unique(x)))
+``` 
+
+#### So how many calls per District were there ? 
+
+Let’s then order this result such that we see the Districts with the highest number of calls first and in descending order.
+```{r}
+dt.crimes[,.N,by=District][order(-N)]
+```
+Next let’s randomly sample 500 rows and then find the mean  number of calls to the cops
+as grouped by FBI.Code (whatever that corresponds to) check https://www2.fbi.gov/ucr/nibrs/manuals/v1all.pdf to see them all.
+```{r}
+dt.crimes[sample(1:.N,500), .(mean=mean(.N)), by="FBI Code"]
+```

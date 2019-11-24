@@ -1,0 +1,76 @@
+## ``join.tbl_sql`` Join sql tbls.
+
+####  Description
+See join for a description of the general purpose of the functions.
+
+####  Usage 
+
+<pre><code>
+## S3 method for class 'tbl_lazy' inner_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), auto_index = FALSE, ...)
+## S3 method for class 'tbl_lazy' left_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), auto_index = FALSE, ...)
+## S3 method for class 'tbl_lazy' right_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), auto_index = FALSE, ...)
+## S3 method for class 'tbl_lazy' full_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), auto_index = FALSE, ...)
+## S3 method for class 'tbl_lazy' semi_join(x, y, by = NULL, copy = FALSE, auto_index = FALSE, ...)
+## S3 method for class 'tbl_lazy' anti_join(x, y, by = NULL, copy = FALSE, auto_index = FALSE, ...)
+</code></pre>
+
+### Arguments 
+* ``x``: tbls to join
+* ``y``: tbls to join by a character vector of variables to join by. If NULL, the default, *_join() will do a natural join, using all variables with common names across the two tables. A message lists the variables so that you can check they’re right (to suppress the message, simply explicitly list the variables that you want to join). To join by different variables on x and y use a named vector. For example, by = c("a" = "b") will match x.a to y.b. 
+* ``copy``: If x and y are not from the same data source, and copy is TRUE, then y will be copied into a temporary table in same database as x. *_join() will automatically run ANALYZE on the created table in the hope that this will make you queries as efﬁcient as possible by giving more data to the query planner. 
+This allows you to join tables across srcs,but it’spotentially expensive operation so you must opt into it. 
+* ``suffix``: If there are non-joined duplicate variables in x and y,these suffixes will be added to the output to disambiguate them.  Should be a character vector of length 2. auto_index if copy is TRUE, automatically create indices for the variables in by. 
+This may speed up the join if there are matching indexes in x. 
+* ``...``: other parameters passed on to methods,for instance, na_matches to control how NA values are matched. See ``join.tbl_df`` for more.
+
+### Implementation notes 
+
+* Semi-joinsareimplementedusing WHERE EXISTS,andanti-joinswith WHERE NOT EXISTS.
+
+* Support for semi-joins is somewhat partial: you can only create semi joins where the x and y columns are compared with = not with more general operators.
+
+### Examples
+```{r}
+## Not run: library(dplyr) if (has_lahman("sqlite")) {
+# Left joins ---------------------------------------------------------------
+lahman_s <- lahman_sqlite() batting <- tbl(lahman_s, "Batting") 
+team_info <- select(tbl(lahman_s, "Teams"), yearID, lgID, teamID, G, R:H)
+```
+```{r}
+# Combine player and whole team statistics 
+first_stint <- select(filter(batting, stint == 1), playerID:H) 
+both <- left_join(first_stint, team_info, type = "inner", by = c("yearID", "teamID", "lgID")) 
+head(both) 
+explain(both)
+```
+```{r}
+# Join with a local data frame 
+grid <- expand.grid( teamID = c("WAS", "ATL", "PHI", "NYA"), yearID = 2010:2012) 
+top4a <- left_join(batting, grid, copy = TRUE) 
+explain(top4a)
+# Indices don't really help here because there's no matching index on # batting 
+top4b <- left_join(batting, grid, copy = TRUE, auto_index = TRUE) 
+explain(top4b)
+```
+```{r}
+# Semi-joins ---------------------------------------------------------------
+people <- tbl(lahman_s, "Master")
+# All people in half of fame 
+hof <- tbl(lahman_s, "HallOfFame") 
+semi_join(people, hof)
+# All people not in the hall of fame 
+anti_join(people, hof)
+# Find all managers 
+manager <- tbl(lahman_s, "Managers") 
+semi_join(people, manager)
+# Find all managers in hall of fame 
+famous_manager <- semi_join(semi_join(people, manager), hof) famous_manager
+
+explain(famous_manager)
+```
+```{r}
+# Anti-joins ---------------------------------------------------------------
+# batters without person covariates anti_join(batting, people) }
+## End(Not run)
+```
+

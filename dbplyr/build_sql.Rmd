@@ -1,0 +1,30 @@
+## build_sql Build a SQL string.
+
+#### Description 
+
+This is a convenience function that should prevent sql injection attacks (which in the context of dplyr are most likely to be accidental not deliberate) by automatically escaping all expressions in theinput, while treating bare stringsassql. Thisis unlikelyto prevent anyserious attack,but should make it unlikely that you produce invalid sql.
+
+#### Usage
+<pre><code>
+build_sql(..., .env = parent.frame(), con = sql_current_con())
+
+</code></pre>
+
+#### Arguments 
+* ``...``: input to convert to SQL .Use ``sql()`` to preserve user input as is (dangerous),and ``ident()`` to label user input as sql identiﬁers (safe) 
+* ``.env``: the environment in which to evalute the arguments. Should not be needed in typical use. 
+* ``con``: database connection; used to select correct quoting characters.
+
+### Examples
+<pre><code>
+build_sql("SELECT * FROM TABLE") 
+
+x <- "TABLE" build_sql("SELECT * FROM ", x) 
+
+build_sql("SELECT * FROM ", ident(x)) 
+
+build_sql("SELECT * FROM ", sql(x))
+# http://xkcd.com/327/ 
+name <- "Robert'); DROP TABLE 
+Students;--" build_sql("INSERT INTO Students (Name) VALUES (", name, ")")
+</code></pre>

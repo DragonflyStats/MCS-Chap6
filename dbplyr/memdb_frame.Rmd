@@ -1,0 +1,23 @@
+
+# ``memdb_frame`` Create a database table in temporary in-memory database.
+
+### Description
+``memdb_frame()`` works like ``tibble::tibble()``, but instead of creating a new data frame in R, it creates a table in ``src_memdb()``.
+
+#### Usage
+<pre><code>
+memdb_frame(..., .name = random_table_name())
+src_memdb()
+</code></pre>
+
+#### Arguments
+* ``...``: Asetofname-valuepairs. Arguments are evaluated sequentially, so you can refer to previously created variables. These arguments are processed with ``rlang::quos()`` and  support unquote via ``!!`` and unquote-splice via ``!!!``. 
+* ``.name``: Name of table in database: defaults to a random name that’s unlikely to conﬂict with an existing table.
+
+#### Examples
+```{r}
+library(dplyr) 
+df <- memdb_frame(x = runif(100), y = runif(100)) 
+df %>% arrange(x) 
+df %>% arrange(x) %>% show_query()
+```

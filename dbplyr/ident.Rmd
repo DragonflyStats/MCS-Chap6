@@ -1,0 +1,21 @@
+## ident Flag a character vector as SQL identiﬁers
+
+#### Description
+* ``ident()``: takes unquoted strings and ﬂags them as identiﬁers. 
+* ``ident_q()``: assumes its input has already been quoted, and ensures it does not get quoted again.  This is currently used only for for schema.table.
+
+#### Usage
+<pre><code>
+ident(...)
+ident_q(...)
+is.ident(x)
+</code></pre>
+#### Arguments
+* ``...``: A character vector, or name-value pairs x An object
+
+#### Examples
+```{r}
+# SQL92 quotes strings with ' escape("x")
+# And identifiers with " ident("x") escape(ident("x"))
+# You can supply multiple inputs ident(a = "x", b = "y") ident_q(a = "x", b = "y")
+```
