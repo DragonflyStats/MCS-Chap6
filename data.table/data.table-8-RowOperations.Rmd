@@ -1,0 +1,37 @@
+Subsetting Rows / Filtering
+
+Suppose you are asked to find all the flights whose origin is 'JFK'.
+# Filter based on one variable
+dat8 = mydata[origin == "JFK"]
+Select Multiple Values
+
+Filter all the flights whose origin is either 'JFK' or 'LGA'
+dat9 = mydata[origin %in% c("JFK", "LGA")]
+
+Apply Logical Operator : NOT
+
+The following program selects all the flights whose origin is not equal to 'JFK' and 'LGA'
+# Exclude Values
+dat10 = mydata[!origin %in% c("JFK", "LGA")]
+
+Filter based on Multiple variables
+
+If you need to select all the flights whose origin is equal to 'JFK' and carrier = 'AA'
+dat11 = mydata[origin == "JFK" & carrier == "AA"]
+
+
+############################################
+
+
+
+6. Filtering rows based on conditions
+The main difference with data.frame is: data.table is aware of its column names.
+
+So while filtering, passing only the columns names inside the square brackets is sufficient.
+
+# dataframe syntax
+mtcars[mtcars$cyl == 6 & mtcars$gear == 4, ]
+
+# datatable syntax
+mtcars_dt[cyl==6 & gear==4, ]
+This saves a significant amount of keystrokes in the long run. This is a major advantage.

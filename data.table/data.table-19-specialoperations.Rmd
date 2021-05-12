@@ -1,0 +1,31 @@
+SQL's RANK OVER PARTITION
+
+In SQL, Window functions are very useful for solving complex data problems. 
+RANK OVER PARTITION is the most popular window function. It can be easily translated in data.table with the help of frank() function. 
+frank() is similar to base R's rank() function but much faster. See the code below.
+dt = mydata[, rank:=frank(-distance,ties.method = "min"), by=carrier]
+In this case, we are calculating rank of variable 'distance' by 'carrier'. We are assigning rank 1 to the highest value of 'distance' within unique values of 'carrier'.
+
+
+Cumulative SUM by GROUP
+
+We can calculate cumulative sum by using cumsum() function.
+dat = mydata[, cum:=cumsum(distance), by=carrier]
+
+Lag and Lead
+
+The lag and lead of a variable can be calculated with shift() function. The syntax of shift() function is as follows - shift(variable_name, number_of_lags, type=c("lag", "lead"))
+DT <- data.table(A=1:5)
+DT[ , X := shift(A, 1, type="lag")]
+DT[ , Y := shift(A, 1, type="lead")]
+
+Lag and Lead Function
+
+Between and LIKE Operator
+
+We can use %between% operator to define a range. It is inclusive of the values of both the ends.
+DT = data.table(x=6:10)
+DT[x %between% c(7,9)]
+The %like% is mainly used to find all the values that matches a pattern.
+DT = data.table(Name=c("dep_time","dep_delay","arrival"), ID=c(2,3,4))
+DT[Name %like% "dep"] 

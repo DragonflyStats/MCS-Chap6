@@ -1,0 +1,358 @@
+
+1. How to install data.table and check the version?
+# Install the data.table package
+install.packages("data.table")
+
+# Load the library
+library(data.table)
+
+# Check version
+print(packageVersion("data.table"))
+2. How to create a data.table from lists (vectors) ?
+Difficulty Level: L1
+
+Question : Create a pandas series from each of the items below: a list, numpy and a dictionary
+
+Input
+
+
+list_1 <- c("a","b","c","d")
+list_2 <- c("1","2","3","4")
+list_3 <- c("aa","bb","cc","dd")
+Show Solution3. How to import csv data files as data.table ?
+Difficulty Level: L1
+
+Question : Import BostonHousing dataset as a data.table.
+
+Show Solution4. How to import only ‘n’ rows from a csv file to create a data.table?
+Difficiulty Level: L1
+
+
+Question : Import first 50 row of BostonHousing dataset as a data.table.
+
+Show Solution5. How to import only specified columns from a csv file?
+Difficulty Level: L1
+
+Question : Import only ‘crim’ and ‘medv’ columns of the BostonHousing dataset as a data.table.
+
+Show Solution6. How to get the nrows, ncolumns, datatype, summary stats of each column in a data.table
+Difficulty Level: L2
+
+Question : Get the number of rows, columns, datatype and summary statistics of each column of the Cars93 dataset.
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv')
+Show Solution
+
+7. How to extract the row and column number of a particular cell with given criterion?
+Difficulty Level: L2
+
+
+Question : Which manufacturer, model and type has the highest Price? What is the row and column number of the cell with the highest Price value?
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution8. How to rename a specific columns in a data.table?
+Difficulty Level: Easy
+
+Question : Rename the column Model as New_Model in DT.
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution9. How to check if a data.table has any missing values?
+Difficulty Level: L1
+
+Question : Check if DT has any missing values. Return TRUE is present else FALSE.
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution10. How to check for missing values in a data.table?
+Difficulty Level: L1
+
+Question : Get the location of missing values in DT. Replace the value with TRUE is missing else FALSE.
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+     Manufacturer Model  Type Min.Price Price Max.Price MPG.city MPG.highway
+[1,]        FALSE FALSE FALSE     FALSE FALSE     FALSE    FALSE       FALSE
+[2,]         TRUE FALSE FALSE     FALSE FALSE     FALSE    FALSE       FALSE
+[3,]        FALSE FALSE FALSE     FALSE FALSE     FALSE    FALSE       FALSE
+[4,]        FALSE FALSE FALSE      TRUE FALSE     FALSE    FALSE       FALSE
+[5,]        FALSE FALSE FALSE      TRUE FALSE      TRUE    FALSE       FALSE
+[6,]        FALSE FALSE FALSE     FALSE FALSE     FALSE    FALSE       FALSE
+(...truncated...)
+Show Solution11. How to get the row and column positions of missing values in a data.table?
+Difficulty Level: L2
+
+Question: Get the row and column positions of missing values in DT.
+
+Input
+
+DT <- fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+[1] "(1, 24)"  "(2, 1)"   "(4, 4)"   "(4, 10)"  "(4, 12)"  "(4, 16)"  "(4, 21)" 
+[8] "(5, 4)"   "(5, 6)"   "(5, 9)"   "(6, 10)"  "(6, 25)"  "(7, 6)"   "(7, 15)" 
+[15] "(7, 17)"  "(9, 21)"  "(10, 15)" "(11, 24)" "(12, 9)"  "(12, 10)" "(12, 13)"
+[22] "(13, 11)" "(13, 24)" "(14, 11)" "(14, 17)" "(15, 7)"  "(15, 13)" "(15, 19)"
+[29] "(15, 22)" "(16, 24)" "(17, 13)" "(17, 24)" "(19, 23)" "(19, 24)" "(19, 26)"
+[36] "(20, 1)"  "(20, 22)" "(23, 17)" "(23, 23)" "(24, 15)" "(24, 24)" .. (truncated)
+Show Solution11. How to count the number of missing values in each column of data.table?
+Difficulty Level: L2
+
+Question : Count the number of missing values in each column of DT
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution12. How to replace missing values of data.table with 0?
+Difficulty Level: L2
+
+Question : Replace all missing values in DT with 0.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution13. How to replace missing values of numeric columns with the mean?
+Difficulty Level: L2
+
+Question : Replace missing values of numeric columns with their respective mean.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution14. How to select a specific column from a data.table as a list (vector)?
+Difficulty Level: L1
+
+Question : Get the column Model in DT as a list.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Solution
+
+[1] "Integra"        "Legend"         "90"             "100"           
+ [5] "535i"           "Century"        "LeSabre"        "Roadmaster"    
+ [9] "Riviera"        "DeVille"        "Seville"        "Cavalier"      
+[13] "Corsica"        "Camaro"         "Lumina"         "Lumina_APV"    
+[17] "Astro"          "Caprice"        "Corvette"       "Concorde"      
+[21] "LeBaron"        "Imperial"       (...truncated...) 
+Show Solution15. How to select a specific column from a data.table as a data.table?
+Difficulty Level: L2
+
+Question : Get the column Model in DT as a data.table (rather than as a list).
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Solution
+
+     Model
+1: Integra
+2:  Legend
+3:      90
+4:     100
+5:    535i
+6: Century
+Show Solution
+
+
+16. How to sort a data.table based on a given column?
+Difficulty Level: L1
+
+Question: Reorder the rows as per Price column of DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution17. How to sort a data.table based on two or more columns?
+Difficulty Level: L1
+
+Question : Reorder the rows as per ascending order of Price column and descending order of Max.Price column of DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution18. How to filter out rows from a data.table that satisfy multiple conditions?
+Difficulty Level: L2
+
+Question : Filter out the rows having Manufacturer as Ford and Price less than 30
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output :
+
+   Manufacturer    Model    Type Min.Price Price Max.Price MPG.city MPG.highway
+1:         Ford  Festiva   Small       6.9   7.4       7.9       31          33
+2:         Ford   Escort   Small       8.4  10.1      11.9       23          30
+3:         Ford    Tempo Compact      10.4  11.3      12.2       22          27
+4:         Ford  Mustang  Sporty      10.8  15.9      21.0       22          29
+5:         Ford    Probe  Sporty      12.8  14.0      15.2       NA          30
+6:         Ford Aerostar     Van      14.5  19.9      25.3       15          20
+       AirBags DriveTrain Cylinders EngineSize Horsepower  RPM Rev.per.mile
+1:        <NA>      Front         4        1.3         63 5000         3150
+2:        None      Front         4        1.8        127 6500         2410
+3:        None      Front         4        2.3         96 4200         2805
+4: Driver only       Rear         4        2.3        105 4600         2285
+5: Driver only      Front         4        2.0        115 5500         2340
+6: Driver only        4WD         6        3.0        145 4800         2080
+(...truncated...)
+Show Solution19. How to select multiple columns from data.table and rename them?
+Difficulty Level: L2
+
+Question : Get columns ‘Manufacturer’ & ‘Type’ from data.table and rename them to ‘MANUFACTURER’ & ‘TYPE’
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   MANUFACTURER    TYPE
+1:        Acura   Small
+2:         <NA> Midsize
+3:         Audi Compact
+4:         Audi Midsize
+5:          BMW Midsize
+6:        Buick Midsize
+Show Solution20. How to get mean of rows that satisfy a condition from a given column?
+Difficulty Level: L2
+
+Question : Get mean of all the vehicles having Price greater than 30.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output :
+
+38.6833
+Show Solution21. How to remove only specified columns from a data.table?
+Difficulty Level: L2
+
+Question : Create new data.table by removing ‘Manufacturer’ & ‘Type’ columns.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution22. How to calculate count of each unique value in a given column?
+Difficulty Level: L2
+
+Question : Calculate number of records for every Manufacturer in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer N
+1:        Acura 1
+2:         <NA> 4
+3:         Audi 2
+4:          BMW 1
+5:        Buick 4
+6:     Cadillac 2
+Show Solution23. How to find mean of a column grouped by multiple columns?
+Difficulty Level: L2
+
+Question : Calculate mean Price for every Manufacturer, Type combination in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer    Type       V1
+1:        Acura   Small 15.90000
+2:         <NA> Midsize 31.93333
+3:         Audi Compact 29.10000
+4:         Audi Midsize 37.70000
+5:          BMW Midsize 30.00000
+6:        Buick Midsize 21.00000
+Show Solution24. How to find mean of column grouped by multiple columns and sort by grouped columns?
+Difficulty Level: L2
+
+Question : Calculate mean Price for every Manufacturer, Type combination and arrange it by the keys in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer    Type    V1
+1:        Acura   Small 15.90
+2:         Audi Compact 29.10
+3:         Audi Midsize 37.70
+4:          BMW Midsize 30.00
+5:        Buick   Large 22.25
+6:        Buick Midsize 21.00
+Show Solution25. How to select all numeric columns from data.table?
+Difficulty Level: L2
+
+Question : Select numeric columns from DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Min.Price Price Max.Price MPG.city MPG.highway EngineSize Horsepower  RPM
+1:      12.9  15.9      18.8       25          31        1.8        140 6300
+2:      29.2  33.9      38.7       18          25        3.2        200 5500
+3:      25.9  29.1      32.3       20          26        2.8        172 5500
+4:        NA  37.7      44.6       19          26         NA        172 5500
+5:        NA  30.0        NA       22          30        3.5        208 5700
+6:      14.2  15.7      17.3       22          31        2.2        110 5200
+   Rev.per.mile Fuel.tank.capacity Passengers Length Wheelbase Width
+1:         2890               13.2          5    177       102    68
+2:         2335               18.0          5    195       115    71
+3:         2280               16.9          5    180       102    67
+4:         2535               21.1          6    193       106    NA
+5:         2545               21.1          4    186       109    69
+6:         2565               16.4          6    189       105    69
+(...truncated...)
+Show Solution26. How to calculate mean of all numeric columns for every Manufacturer?
+Difficulty Level: L3
+
+Question : Calculate mean of all numeric columns for every Manufacturer
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer Min.Price  Price Max.Price MPG.city MPG.highway EngineSize
+1:        Acura    12.900 15.900     18.80     25.0       31.00      1.800
+2:         <NA>    26.775 28.550     30.30     19.0       26.00      2.975
+3:         Audi        NA 33.400     38.45     19.5       26.00         NA
+4:          BMW        NA 30.000        NA     22.0       30.00      3.500
+5:        Buick    20.750 21.625        NA     19.0       27.75      3.875
+6:     Cadillac    35.250 37.400     39.50     16.0       25.00      4.750
+(...truncated...)
+Show Solution27. How to get first 3 rows for every Manufacturer?
+Difficulty Level: L3
+
+Question : Get first 3 rows for every Manufacturer in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer   Model    Type Min.Price Price Max.Price MPG.city MPG.highway
+1:        Acura Integra   Small      12.9  15.9      18.8       25          31
+2:         Audi      90 Compact      25.9  29.1      32.3       20          26
+3:         Audi     100 Midsize        NA  37.7      44.6       19          26
+4:          BMW    535i Midsize        NA  30.0        NA       22          30
+5:        Buick Century Midsize      14.2  15.7      17.3       22          31
+6:        Buick LeSabre   Large      19.9  20.8        NA       19          28
+(...truncated...)
+Show Solution
+
+

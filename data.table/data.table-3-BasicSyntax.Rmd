@@ -1,0 +1,12 @@
+DT[ i , j , by]
+The first parameter of data.table i refers to rows. It implies subsetting rows. It is equivalent to WHERE clause in SQL
+The second parameter of data.table j refers to columns. It implies subsetting columns (dropping / keeping). It is equivalent to SELECT clause in SQL.
+The third parameter of data.table by refers to adding a group so that all calculations would be done within a group. Equivalent to SQL's GROUP BY clause.
+
+The data.table syntax is NOT RESTRICTED to only 3 parameters. There are other arguments that can be added to data.table syntax. The list is as follows -
+with, which
+allow.cartesian
+roll, rollends
+.SD, .SDcols
+on, mult, nomatch
+The above arguments would be explained in the latter part of the post.

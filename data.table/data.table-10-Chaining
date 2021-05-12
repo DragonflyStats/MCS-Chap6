@@ -1,0 +1,25 @@
+16. Chaining
+Data.Table offers unique features there makes it even more powerful and truly a swiss army knife for data manipulation.
+
+First lets understand what chaining is.
+
+Using chaining, you can do multiple datatable operatations one after the other without having to store intermediate results.
+
+For example, instead of writing two statements you can do it on one.
+
+Below code sorts after grouping by cyl:
+
+dt1 <- mtcars_dt[, .(mean_mpg=mean(mpg),
+                     mean_disp=mean(disp),
+                     mean_wt=mean(wt),
+                     mean_qsec=mean(qsec)), by=cyl]
+output <- dt1[order(cyl), ]
+output
+With chaining, that is, by attaching the square brackets at the end, it’s done in one step.
+
+output <- mtcars_dt[, .(mean_mpg=mean(mpg),
+                     mean_disp=mean(disp),
+                     mean_wt=mean(wt),
+                     mean_qsec=mean(qsec)), by=cyl][order(cyl), ]
+Actually, chaining is available in dataframes as well, but with features like by, it becomes convenient to use on a data.table.
+

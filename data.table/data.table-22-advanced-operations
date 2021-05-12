@@ -1,0 +1,117 @@
+
+17. What is .SD and How to write functions inside data.table
+Next, lets see how to write functions within a data.table square brackets.
+
+Let’s suppose, you want to compute the mean of all the variables, grouped by ‘cyl’. How to do that?
+
+You can create the columns one by one by writing by hand. Or, you can use the lapply() function to do it all in one go.
+
+But `lapply()` takes the data.frame as the first argument. Then, how to use `lapply() inside a data.table?
+
+You can use the .SD object as the first argument for lapply().
+
+But, what is the .SD object?
+
+It is nothing but a data.table that contains all the columns of the original datatable except the column specified in ‘by’ argument. So, here is what it looks like.
+
+mtcars_dt[, .SD, by=cyl]
+# <returns the mtcars_dt table grouped by cyl. Try it>
+So, now you can pass this as the first argument in `lapply()`. The 11th column in `.SD` is rownames, so let’s include only the first 10.
+
+output <- mtcars_dt[, lapply(.SD[, 1:10, with=F], mean), by=cyl]
+output
+Optionally, Instead of subsetting .SD like this, You can specify the columns that should be part of .SD using the .SDCols object
+
+output <- mtcars_dt[, lapply(.SD, mean), by=cyl, .SDcols=c("mpg", "disp", "hp", "drat", "wt", "qsec")]
+output
+The output now contains only the specified columns.
+
+18. Keys
+Now, we have come to the ‘key’ concept for data.tables: Keys
+
+Let’s understand why keys can be useful and how to set it.
+
+Setting one or more keys on a data.table enables it to perform binary search, which is many order of magnitudes faster than linear search, especially for large data.
+
+As a result, the filtering operations are super fast after setting the keys.
+
+There is a side effect though. By setting a key, the `data.table` gets sorted by that key.
+
+So how to set a key?
+
+Just use the setkey function.
+
+setkey(mtcars_dt, carname)
+It’s so fast making it look like nothing happened. But it internally sorted data.table with ‘carname’ as the key.
+
+mtcars_dt
+# <mtcars_dt is sorted by carname column which we created in beginning>
+If you notice, this table is sorted by ‘carname’ variable.
+
+To check the keys for a data table, you can use the key() function.
+
+key(mtcars_dt)
+Once the key is set, merging data.tables is very direct. I have distributed few columns of mtcars in the following data.tables.
+
+dt1 <- mtcars_dt[,.(carname, mpg, cyl)]
+dt2 <- mtcars_dt[1:10, .(carname, gear)]
+You can join these two datatables:
+
+dt1[dt2]
+This returns dt1‘s rows using dt2 based on the key of these data.tables.
+
+You can also set multiple keys if you wish.
+
+setkey(mtcars_dt, cyl, mpg)
+mtcars_dt
+Now, how to remove the keys?
+
+Use setkey() and set it to NULL. But the datatable will not go back to it original row arrangement.
+
+setkey(mtcars_dt, NULL)
+Another aspect of setting keys is the ‘keyby’ argument.
+
+Using keyby you can do grouping and set the by column as a key in one go.
+
+For example, in this example we saw earlier, you can skip the chaining by using keyby instead of just by.
+
+# Group and sort using chaining
+output <- mtcars_dt[, .(mean_mpg=mean(mpg),
+                     mean_disp=mean(disp),
+                     mean_wt=mean(wt),
+                     mean_qsec=mean(qsec)), by=cyl][order(cyl), ]
+
+# Group and sort using keyby
+output <- mtcars_dt[, .(mean_mpg=mean(mpg),
+                     mean_disp=mean(disp),
+                     mean_wt=mean(wt),
+                     mean_qsec=mean(qsec)), keyby=cyl]
+key(output)
+As a result, the output has the key as cyl.
+
+
+
+21. Pivot Table operations
+The dcast.data.table() is the function used for doing pivot table like operations as seen in spreadsheet softwares like Microsoft Office Excel or Google spreadsheets.
+
+The good thing is dcast.data.table() works equally well on data.frame object as well.
+
+Let’s create a pivot table showing the mean mileage(mpg) for Cylinders vs Carburetter (Carb)
+
+dcast.data.table(mtcars_dt, cyl ~ carb, fun.aggregate = mean, value.var = 'mpg')
+So how to understand the syntax?
+
+There are 4 primary arguments:
+
+data.table
+formula: Rows of the pivot table on the left of ‘~’ and columns of the pivot on the right
+value.var: column whose values should be used to fill up the pivot table
+fun.aggregate: the function used to aggregate the value.var column.
+dcast.data.table() is versatile in allowing multiple columns to be passed to the value.var and allows multiple functions to fun.aggregate as well.
+
+Let’s solve a quick exercise based on pivot table.
+
+Question 1: Create a pivot table to show the maximum and minimum mileage observed for Carburetters vs Cylinders combination?
+
+Question 2: Which carb value has the highest difference between max – min?
+

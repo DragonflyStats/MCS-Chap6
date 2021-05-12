@@ -1,0 +1,45 @@
+
+Selecting or Keeping Columns
+
+Suppose you need to select only 'origin' column. You can use the code below -
+dat1 = mydata[ , origin] # returns a vector
+The above line of code returns a vector not data.table.
+
+To get result in data.table format, run the code below :
+dat1 = mydata[ , .(origin)] # returns a data.table
+It can also be written like data.frame way
+dat1 = mydata[, c("origin"), with=FALSE]
+
+Keeping a column based on column position
+dat2 =mydata[, 2, with=FALSE]
+In this code, we are selecting second column from mydata.
+
+Keeping Multiple Columns
+
+The following code tells R to select 'origin', 'year', 'month', 'hour' columns.
+dat3 = mydata[, .(origin, year, month, hour)]
+
+Keeping multiple columns based on column position
+
+You can keep second through fourth columns using the code below -
+dat4 = mydata[, c(2:4), with=FALSE]
+
+Dropping a Column
+
+Suppose you want to include all the variables except one column, say. 'origin'. It can be easily done by adding ! sign (implies negation in R)
+dat5 = mydata[, !c("origin"), with=FALSE]
+
+Dropping Multiple Columns
+dat6 = mydata[, !c("origin", "year", "month"), with=FALSE]
+
+Keeping variables that contain 'dep'
+
+You can use %like% operator to find pattern. It is same as base R's grepl() function, SQL's LIKE operator and SAS's CONTAINS function.
+dat7 = mydata[,names(mydata) %like% "dep", with=FALSE]
+
+Rename Variables
+
+You can rename variables with setnames() function. In the following code, we are renaming a variable 'dest' to 'destination'.
+setnames(mydata, c("dest"), c("Destination"))
+To rename multiple variables, you can simply add variables in both the sides.
+setnames(mydata, c("dest","origin"), c("Destination", "origin.of.flight"))

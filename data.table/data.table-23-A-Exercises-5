@@ -1,0 +1,208 @@
+
+
+Data Table Syntax
+
+7. How to select given columns
+Now, let see how to subset columns.
+
+The most unexpected thing you will notice with data.table is you cant select a column by its numbered position in a data.table.
+
+For example, you can expect the following to work in a data.frame.
+
+mtcars[, 1]
+# <returns first column>
+But this would just return ‘1’ in a data.table
+
+mtcars_dt[, 1]
+#> 1
+If you want to get that column by position alone, you should add an additional argument, with=FALSE.
+
+mtcars_dt[, 1, with=F]
+# <returns first column>
+The returned output is a 1-column data.table.
+
+An alternate way and a better practice is to pass in the actual column name.
+
+mtcars_dt[, mpg]
+Notice here that the ‘mpg’ is not a string as it’s not written within quotes.
+
+8. How to select multiple columns using a character vector
+What if the column name is present as a string in another variable (vector)?
+
+In that case, you can’t use mpg directly. You need to additionally pass with=FALSE.
+
+myvar <- "mpg"
+mtcars_dt[, myvar, with=F]
+# <returns mpg column>
+The same principle applies if you have multiple columns to be selected.
+
+columns <- c('mpg', 'cyl', 'disp')
+mtcars_dt[, columns]
+#> [1] "mpg"  "cyl"  "disp"
+To make the above command work, you need to pass with=FALSE inside the square brackets
+
+mtcars_dt[, columns, with=FALSE]
+Clear?
+
+If you want to select multiple columns directly, then enclose all the required column names within list.
+
+# syntax 1:
+mtcars_dt[1:4, list(mpg, cyl, gear)]
+
+# syntax 2: most used
+mtcars_dt[, .(mpg, cyl, gear)]
+9. How to drop columns
+How to drop the mpg, cyl and gear columns alone?
+
+Place them in a vector and use the ! in front to drop them. This effectively returns all columns except those present in the vector.
+
+drop_cols <- c("mpg", "cyl", "gear")
+mtcars_dt[, !drop_cols, with=FALSE]
+10. How to rename columns
+The setnames() function is used for renaming columns.
+
+It takes the data.table (or data.frame), current name and new name as arguments and changes the column names in place without any copying of data. Always recommended!
+
+setnames(mtcars_dt, 'vs', 'engine_type')
+colnames(mtcars_dt)
+#> <'vs' column is renamed to 'engine_type'.
+DT <- data.table(A=1:5)
+DT[ , X := shift(A, 1, type="lag")]
+DT[ , Y := shift(A, 1, type="lead")]
+Before moving on, let’s try out a mini challenge in R console.
+
+Q: Convert the in-built airquality dataset to a data.table. Then select “Solar.R”, “Wind” and “Temp” for those rows where “Ozone” is not missing.
+
+Show Solution11. Creating a new column from existing columns
+You can always create a new column as you do with a data.frame, but, data.table lets you create column from within square brackets. This saves key strokes.
+
+# data.frame syntax (works on data.table)
+mtcars_dt$cyl_gear <- mtcars_dt$cyl + mtcars_dt$gear
+
+# data.table syntax
+mtcars_dt[, cyl_gear2 := cyl + gear]
+mtcars_dt
+To create multiple new columns at once, use the special assignment symbol as a function.
+
+mtcars_dt[,  `:=`(cyl_gear3 = cyl * gear,
+                  cyl_gear4 = cyl - gear)]
+mtcars_dt
+To select only specific columns, use the list or dot symbol instead.
+
+mtcars_dt[,  .(cyl_gear3 = cyl * gear,
+                  cyl_gear4 = cyl - gear)]
+Now let’s see a special but frequently used case.
+
+Let’s suppose you have the column names in a character vector and want to select those columns alone from the data.table. Passing it inside the square brackets don’t work.
+
+columns <- c('mpg', 'cyl', 'disp')
+mtcars_dt[, columns]
+#> [1] "mpg"  "cyl"  "disp"
+To make the above command work, you need to pass with=FALSE inside the square brackets
+
+mtcars_dt[1:3, columns, with=FALSE]
+12. How to create new columns using character vector
+Suppose you want to create a new column but you have the name of that new column in another character vector. How to create the new column without using the actual column name?
+
+For example, you have the new column name in the myvar vector.
+
+And, you want to assign some value, say the value of 1 to this column. Doing this will create a new column named ‘myvar’. And not var1 as intended.
+
+myvar <- c('var1')
+mtcars_dt[, myvar:=1]
+# <creates a column named myvar -- Bad! >
+To create a column named ‘var1’ instead, keep myvar inside a vector.
+
+# Create column named 'var1'
+# Syntax 1
+mtcars_dt[, c(myvar):=1]
+
+# Syntax 2
+mtcars_dt[, (myvar):=2]
+Finally, if you want to delete a columns, assign it to NULL.
+
+mtcars_dt[, c("myvar", "var1") := NULL]
+All the above column names are now deleted.
+
+Before moving on, try solving this exercise in your R console.
+
+Question: Create a new column called ‘mileage_type’ that has the value ‘high’ if mpg > 20 else has value low.
+
+Show Solution13. Grouping
+Now, let’s move on to the second major and awesome feature of R data.table: grouping using by.
+
+In base R, grouping is accomplished using the aggregate() function. It’s a bit cumbersome and hard to remember the syntax. All the functionalities can be accomplished easily using the ‘by’ argument within square brackets.
+
+For example, in mtcars data, how to get the mean mileage for each cylinder type?
+
+Answer: Since you want to see the mileage by cyl column, set by = 'cyl' inside the square brackets.
+
+# Mean mileage by `cyl` 
+mtcars_dt[, .(mean_mileage=mean(mpg)), by=cyl]
+Thats really useful isnt it?
+
+You can even add multiple columns to the ‘by’ argument.
+
+mtcars_dt[, .(mean_mileage=mean(mpg)), by=.(cyl, gear)]
+14. A slightly complex groupby problem
+Now, lets see some really special cases.
+
+How to select the first occurring value of mpg for each unique cyl value
+
+That is, instead of taking the mean of mileage for every cylinder, you want to select the first occurring value of mileage. How to do that?
+
+mtcars_dt[, .(first_mileage=mpg[1]), by=cyl]
+What to do if you want the second value? Just replace the 1 with 2.
+
+mtcars_dt[, .(second_mileage=mpg[2]), by=cyl]
+And what if you want the last value?
+You can either use length(mpg) or .N:
+
+# Option 1
+mtcars_dt[, .(first_mileage=mpg[length(mpg)]), by=cyl]
+
+# Option 2
+mtcars_dt[, .(first_mileage=mpg[.N]), by=cyl]
+15. What does .N and .I do
+.N contains the number of rows present.
+
+So the following will get the number of rows for each unique value of cyl.
+
+mtcars_dt[, .N, by=cyl]
+# < returns the number of rows for each unique value of cyl>
+Now, how to create row numbers of items?
+
+It can be done using .I variable, short for ‘index’ (I guess).
+
+Lets first understand what .I returns.
+
+mtcars_dt[, .I]
+# <returns numbers from 1,2,3..>
+It returns all the row numbers.
+
+Now, how to return the row numbers where cyl=6 ?
+
+This can get confusing in the beginning so pay close attention.
+
+If you want to get the row numbers of items that satisfy a given condition, you might tend to write like this:
+
+mtcars_dt[cyl==6, .I]
+# <again returns numbers from 1,2,3..>
+But this returns the wrong answer because, `data.table` has already filtered the rows that contain cyl value of 6. So, what you want to do instead is to write that condition to subset .I alone instead of the whole `data.table`.
+
+mtcars_dt[, .I[cyl==6]]
+The result is same as using the `which()` function, which we used in `data.frames`.
+
+mtcars_dt[, which(cyl==6)]
+Great!
+
+Let’s solve another challenge before moving on.
+
+
+Q: Compute the number of cars and the mean mileage for each gear type. After a few seconds I will show the answer.
+
+
+Show Solution
+
+
+

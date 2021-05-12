@@ -1,0 +1,33 @@
+Show Solution
+
+22. set() – A magic function for fast assignment operations
+The set() command is an incredibly fast way to assign values to a new column.
+
+The syntax is: set(dt, i, j, value), where i is the row number and j is the column number.
+
+As a best practice, always explicitly use integers for i and j, that is, use 10L instead of 10.
+
+It is usually used in for-loops and is literally thousands of times faster. Yes, it is so fast even when used within a for-loop, which is proof that for-loop is not really a bottleneck for speed. It is the underlying data structure related overhead that causes for-loop to be slow, which is exactly what set() avoids.
+
+Besides, it works on a data.frame object as well. It works like magic!
+
+Below is an example to illustrate the power of set() taken from official documentation itself. The speed benchmark may be outdated, but, run and check the speed by yourself to believe it.
+
+m = matrix(1,nrow=100000,ncol=100)
+DF = as.data.frame(m)
+DT = as.data.table(m)    
+
+system.time(for (i in 1:10000) DF[i,1] <- i)
+#> 591 seconds
+
+system.time(for (i in 1:10000) DT[i,V1:=i])
+#> 2.4 seconds  ( 246 times faster, 2.4 is overhead in [.data.table )
+
+system.time(for (i in 1:10000) set(DT,i,1L,i))
+#> 0.03 seconds  ( 19700 times faster, overhead of [.data.table is avoided )
+22. Conclusion
+We have covered all the core concepts in order to work with data.table package.
+
+To gain more practice, try the 101 R data.table Exercises.
+
+########################################################

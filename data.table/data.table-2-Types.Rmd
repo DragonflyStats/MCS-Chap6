@@ -1,0 +1,49 @@
+Convert a data.table to data.frame
+
+You can use setDF() function to accomplish this task.
+setDF(mydata)
+Similarly, you can use setDT() function to convert data frame to data table.
+set.seed(123)
+X = data.frame(A=sample(3, 10, TRUE),
+               B=sample(letters[1:3], 10, TRUE)
+setDT(X, key = "A")
+
+
+#######################
+
+
+4. How to convert data.frame to data.table
+You can convert any `data.frame` into `data.table` using one of the approaches:
+
+data.table(df) or as.data.table(df)
+setDT(df)
+The difference between the two approaches is: data.table(df) function will create a copy of df and convert it to a data.table.
+
+Whereas, setDT(df) converts it to a data.table inplace. That means, the df itself gets converted to a data.table and you don’t have to assign it to a different object.
+
+As a result, there is no copy made and no duplication of the same data.
+
+Let’s reload the mtcars dataframe from R’s default datasets pacakge.
+
+# reload data
+data("mtcars")
+head(mtcars)
+Important: The data.table() does not have any rownames. So if the data.frame has any rownames, you need to store it as a separate column before converting to data.table.
+
+mtcars$carname <- rownames(mtcars)
+mtcars_dt <- as.data.table(mtcars)
+class(mtcars_dt)
+#> [1] "data.table" "data.frame"
+Alternately, use setDT() to convert it to data.table in place.
+
+mtcars_copy <- copy(mtcars)
+setDT(mtcars_copy)
+class(mtcars_copy)
+#> [1] "data.table" "data.frame"
+5. How to convert data.table to data.frame
+Conversely, use as.data.frame(dt) or setDF(dt) to convert a data.table to a data.frame.
+
+
+setDF(mtcars_copy)
+class(mtcars_copy)
+#> [1] "data.frame"

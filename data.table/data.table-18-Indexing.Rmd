@@ -1,0 +1,69 @@
+Faster Data Manipulation with Indexing
+
+data.table uses binary search algorithm that makes data manipulation faster.
+
+Binary Search Algorithm
+Binary search is an efficient algorithm for finding a value from a sorted list of values. It involves repeatedly splitting in half the portion of the list that contains values, until you found the value that you were searching for.
+Suppose you have the following values in a variable :
+5, 10, 7, 20, 3, 13, 26
+You are searching the value 20 in the above list. See how binary search algorithm works -
+
+First, we sort the values 
+We would calculate the middle value i.e. 10.
+We would check whether 20 = 10? No. 20 < 10.
+Since 20 is greater than 10, it should be somewhere after 10. So we can ignore all the values that are lower than or equal to 10.
+We are left with 13, 20, 26. The middle value is 20. 
+We would again check whether 20=20. Yes. the match found.
+
+If we do not use this algorithm, we would have to search 5 in the whole list of seven values.
+
+It is important to set key in your dataset which tells system that data is sorted by the key column. For example, you have employee’s name, address, salary, designation, department, employee ID. We can use 'employee ID' as a key to search a particular employee.
+
+Set Key
+
+In this case, we are setting 'origin' as a key in the dataset mydata.
+# Indexing (Set Keys)
+setkey(mydata, origin)
+Note : It makes the data table sorted by the column 'origin'.
+
+How to filter when key is turned on.
+
+You don't need to refer the key column when you apply filter.
+data12 = mydata[c("JFK", "LGA")]
+
+Performance Comparison
+
+You can compare performance of the filtering process (With or Without KEY).
+system.time(mydata[origin %in% c("JFK", "LGA")])
+system.time(mydata[c("JFK", "LGA")])
+
+Performance - With or without KEY
+If you look at the real time in the image above, setting key makes filtering twice as faster than without using keys.
+
+Indexing Multiple Columns
+
+We can also set keys to multiple columns like we did below to columns 'origin' and 'dest'. See the example below.
+setkey(mydata, origin, dest)
+Filtering while setting keys on Multiple Columns
+# First key column 'origin' matches “JFK” and second key column 'dest' matches “MIA”
+mydata[.("JFK", "MIA")]
+It is equivalent to the following code :
+mydata[origin == "JFK" & dest == "MIA"]
+To identify the column(s) indexed by
+key(mydata)
+Result : It returns origin and dest as these are columns that are set keys.
+
+Sorting Data
+
+We can sort data using setorder() function, By default, it sorts data on ascending order.
+mydata01 = setorder(mydata, origin)
+
+Sorting Data on descending order
+
+In this case, we are sorting data by 'origin' variable on descending order.
+mydata02 = setorder(mydata, -origin)
+
+Sorting Data based on multiple variables
+
+In this example, we tells R to reorder data first by origin on ascending order and then variable 'carrier'on descending order.
+mydata03 = setorder(mydata, origin, -carrier)

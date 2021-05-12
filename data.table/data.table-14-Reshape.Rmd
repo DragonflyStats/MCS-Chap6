@@ -1,0 +1,8 @@
+
+Other Useful Functions
+
+Reshape Data
+It includes several useful functions which makes data cleaning easy and smooth. 
+To reshape or transpose data, you can use dcast.data.table() and melt.data.table() functions. 
+These functions are sourced from reshape2 package and make them efficient. 
+It also add some new features in these functions.

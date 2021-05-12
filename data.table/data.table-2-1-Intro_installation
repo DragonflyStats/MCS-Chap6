@@ -1,0 +1,31 @@
+
+1. Introduction: Why data.table?
+The data.table is an alternative to R’s default data.frame to handle tabular data.
+
+The reason it’s so popular is because of the speed of execution on larger data and the terse syntax. So, effectively you type less code and get much faster speed. It is one of the most downloaded packages in R and is preferred by Data Scientists.
+
+It is probably one of the best things that have happened to R programming language as far as speed is concerned.
+
+Though data.table provides a slightly different syntax from the regular R data.frame, it is quite intuitive. So once you get it, it feels obvious and natural that you wouldn’t want to go back the base R data.frame syntax.
+
+
+By the end of this guide you will understand the fundamental syntax of data.table and the structure behind it. All the core data manipulation functions of data.table, in what scenarios they are used and how to use it, with some advanced tricks and tips as well.
+
+data.table is authored by Matt Dowle with significant contributions from Arun Srinivasan and many others.
+
+Related Post: 101 R data.table Exercises
+
+2. How to install data.table package
+Installing data.table package is no different from other R packages. Its recommended to run install.packages() to get the latest version on the CRAN repository. However, if you want to use the latest development version, you can get it from github as well.
+
+# Install from CRAN
+install.packages('data.table')
+
+# Install Dev version from Gitlab
+install.packages("data.table", repos="https://Rdatatable.gitlab.io/data.table")
+data.table::update.dev.pkg()
+If you want to revert back to the CRAN version do:
+
+# Remove and Reinstall
+remove.packages("data.table")
+install.packages("data.table")

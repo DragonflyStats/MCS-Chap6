@@ -1,0 +1,54 @@
+
+How to Install and load data.table Package
+install.packages("data.table") 
+#load required library
+library(data.table)
+
+#### Read Data
+
+In data.table package, fread() function is available to read or get data from your computer or from a web page. It is equivalent to read.csv() function of base R.
+mydata = fread("https://github.com/arunsrinivasan/satrdays-workshop/raw/master/flights_2014.csv")
+
+
+
+
+
+
+
+3. Importing Data
+The way you work with data.tables is quite different from how you’d work with data.frames. Let’s understand these difference first while you gain mastery over this fantastic package.
+
+The fread(), short for fast read is data.tables version of read.csv().
+
+Like read.csv() it works for a file in your local computer as well as file hosted on the internet. Plus it is atleast 20 times faster.
+
+Let’s import the mtcars dataset stored as a csv file.
+
+library(data.table)
+mt <- fread("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
+head(mt)
+class(mt)
+#> [1] "data.table" "data.frame"
+The imported data is stored directly as a data.table.
+
+As you see from the above output, the data.table inherits from a data.frame class and therefore is a data.frame by itself. So, functions that accept a data.frame will work just fine on data.table as well.
+
+Because the dataset we imported was small, the read.csv()‘s speed was good enough. However, the speed gain becomes evident when you import a large dataset (millions of rows).
+
+To get a flavor of how fast fread() is, run the below code. It creates a 1M rows csv file. Then reads it back again. The time taken by fread() and read.csv() functions gets printed in console.
+
+# Create a large .csv file
+set.seed(100)
+m <- data.frame(matrix(runif(10000000), nrow=1000000))
+write.csv(m, 'm2.csv', row.names = F)
+
+# Time taken by read.csv to import
+system.time({m_df <- read.csv('m2.csv')})
+#>   user  system elapsed 
+#> 39.798   1.326  43.003 
+
+# Time taken by fread to import
+system.time({m_dt <- fread('m2.csv')})
+#>  user  system elapsed 
+#> 1.735   0.097   1.877 
+That’s about 20x faster. The time difference gets wider when the filesize increases.

@@ -1,0 +1,20 @@
+
+Adding Columns (Calculation on rows)
+
+You can do any operation on rows by adding := operator. In this example, we are subtracting 'dep_delay' variable from 'dep_time' variable to compute scheduled departure time.
+mydata[, dep_sch:=dep_time - dep_delay]
+
+Adding Multiple Columns
+mydata[, c("dep_sch","arr_sch"):=list(dep_time - dep_delay, arr_time - arr_delay)]
+If you don't want to make changes (addition of columns) in the original data, you can make a copy of it.
+mydata_C <- copy(mydata)
+mydata_C[, c("dep_sch","arr_sch"):=list(dep_time - dep_delay, arr_time - arr_delay)]
+
+IF THEN ELSE
+
+The 'IF THEN ELSE' conditions are very popular for recoding values. In data.table package, it can be done with the following methods :
+
+Method I :    mydata[, flag:= 1*(min < 50)]
+Method II :   mydata[, flag:= ifelse(min < 50, 1,0)]
+
+It means to set flag= 1 if min is less than 50. Otherwise, set flag =0.

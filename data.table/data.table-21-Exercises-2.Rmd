@@ -1,0 +1,491 @@
+28. How to remove specific column from data.table?
+Difficulty Level: L2
+
+Question : Remove column Model from DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution29. How to set key to data.table?
+Difficulty Level: L1
+
+Question : Set column AirBags as key to the data.table
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution30. How to get all rows where AirBags are at 'Driver & Passenger' in DT?
+Difficulty Level: L2
+
+Question : Get all rows where AirBags are Driver & Passenger in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution31. How to get all rows where AirBags are either 'Driver & Passenger' or 'No data'?
+Difficulty Level: L2
+
+Question : Get all rows where AirBags are Driver & Passenger & No data.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+
+Show Solution33. How to get last and 2nd last (penultimate) row of data.table?
+Difficulty Level: L2
+
+Question 1 : Get penultimate row of DT.
+
+Question 2 : Get last row of DT.
+
+Input:
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output:
+
+   Manufacturer Model    Type Min.Price Price Max.Price MPG.city MPG.highway
+1:         <NA>   850 Midsize      24.8  26.7      28.5       20          28
+2:        Volvo   240 Compact      21.8  22.7      23.5       21          28
+              AirBags DriveTrain Cylinders EngineSize Horsepower  RPM
+1: Driver & Passenger      Front         5        2.4        168 6200
+2:        Driver only       Rear      <NA>        2.3        114 5400
+   Rev.per.mile Man.trans.avail Fuel.tank.capacity Passengers Length Wheelbase
+1:           NA             Yes               19.3          5    184       105
+2:         2215             Yes               15.8          5    190       104
+   Width Turn.circle Rear.seat.room Luggage.room Weight  Origin      Make
+1:    69          38           30.0           15   3245 non-USA Volvo 850
+2:    67          37           29.5           14   2985 non-USA Volvo 240
+Show Solution34. How to reorder columns of data.table?
+Difficulty Level: L2
+
+Question : Reorder columns of DT as V2 , V1, V3
+
+Input
+
+DT <- data.table(V1= c("a","b","c","d"), V2 =c("1","2","3","4"), V3 = c("aa","bb","cc","dd") )
+Desired Output
+
+   V2 V1 V3
+1:  1  a aa
+2:  2  b bb
+3:  3  c cc
+4:  4  d dd
+Show Solution35. How to select one column and compute standard deviation of another column and return a single value that gets recycled?
+Difficulty Level: L2
+
+Question : Select column Manufacturer and compute standard deviation of column Price and return a single value that gets recycled.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output:
+
+   Manufacturer Sd.Price
+1:        Acura  9.72428
+2:         <NA>  9.72428
+3:         Audi  9.72428
+4:         Audi  9.72428
+5:          BMW  9.72428
+6:        Buick  9.72428
+Show Solution36. How to use row indexing, column indexing and group by expressions all together?
+Difficulty Level: L2
+
+Question : Calculate sum of Weight of cars under every Manufacturer but exclude all 'Midsize' Type cars.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Manufacturer    V1
+1:        Acura  2705
+2:         Audi  3375
+3:        Buick  7575
+4:     Cadillac  3620
+5:    Chevrolet 23545
+6:         <NA>  3515
+Show Solution37. How to get the row number of the nth largest value in a column?
+Difficulty Level: L2
+
+Question : Find the row position of the 5th largest value of column Price in DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution38. How to find and cap outliers from a data.table column?
+Difficulty Level: L2
+
+Question: Replace all values of Length column in the lower 5%ile and greater than 95%ile with respective 5th and 95th %ile value.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution39. How to swap two column values based on a condition in another column of a data.table?
+Difficulty Level: L2
+
+Question : Swap column V1 & V3 for all the rows where V2 = 2.
+
+Input
+
+DT <- data.table(V1= c("a","b","c","d"), 
+                 V2 =c("1","2","2","3"), 
+                 V3 = c("aa","bb","cc","dd") )
+Desired Output:
+
+   V1 V2 V3
+1:  a  1 aa
+2: bb  2  b
+3: cc  2  c
+4:  d  3 dd
+Show Solution40. How to swap two rows of a dataframe?
+Difficulty Level: L2
+
+Questions : Swap rows 1 and 2 in DT.
+
+Input
+
+DT <- data.table(V1= c("a","b","c","d"), 
+                 V2 =c("1","2","2","3"), 
+                 V3 = c("aa","bb","cc","dd") )
+Desired Output
+
+   V1 V2 V3
+1:  b  2 bb
+2:  a  1 aa
+3:  c  2 cc
+4:  d  3 dd
+Show Solution41. How to reverse the rows of a data.table?
+Difficulty Level: L2
+
+Question : Reverse all the rows of DT so that topmost row goes to bottom.
+
+Input
+
+DT <- data.table(V1= c("a","b","c","d"), 
+                 V2 =c("1","2","2","3"), 
+                 V3 = c("aa","bb","cc","dd") )
+Desired Output
+
+     V1  V2  V3  
+[1,] "d" "3" "dd"
+[2,] "c" "2" "cc"
+[3,] "b" "2" "bb"
+[4,] "a" "1" "aa"
+Show Solution42. How to create one-hot encodings of a categorical variable (dummy variables)?
+Difficulty Level: L2
+
+Question : Get one-hot encodings for columns Gender & Degree in the data.table DT and append it as columns.
+
+Input
+
+DT <- data.table(Gender = c("M","M","F","F"), E_Id =c(1,2,3,4), Degree = c("UG","PG","PhD","UG") )
+   Gender E_Id Degree
+1:      M    1     UG
+2:      M    2     PG
+3:      F    3    PhD
+4:      F    4     UG
+Desired Output
+
+   E_Id Gender_F Gender_M Degree_PG Degree_PhD Degree_UG
+1:    1        0        1         0          0         1
+2:    2        0        1         1          0         0
+3:    3        1        0         0          1         0
+4:    4        1        0         0          0         1
+Show Solution43. How to find median value in each numeric column in R data.table?
+Difficulty Level: L2
+
+Question : Find row-wise sum values of DT.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+   Min.Price Price Max.Price MPG.city MPG.highway EngineSize Horsepower  RPM
+1:      14.6  17.7     19.15       21          28        2.3        140 5200
+   Rev.per.mile Fuel.tank.capacity Passengers Length Wheelbase Width
+1:         2360               16.5          5    181       103    69
+   Turn.circle Rear.seat.room Luggage.room Weight
+1:          39           27.5           14   3085
+Show Solution44. How to compute correlation score of each column against other columns?
+Difficulty Level: L2
+
+Question : Compute correlation score of each column against other columns.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Show Solution45. How to create a column containing the minimum by maximum of each row?
+Difficulty Level: L2
+
+Question : Compute the minimum-by-maximum for every row of df.
+
+DT <- data.table(V1 = runif(10, 1, 100), 
+                 V2 = runif(10, 1, 80), 
+                 V3 = runif(10, 1, 100))
+Show Solution46. How to scale all columns in a dataframe?
+Difficulty Level: L2
+
+Question : Normalize all columns in DT.
+
+Without using external packages.
+
+Input
+
+DT <- data.table(V1= runif(10, 1, 100), 
+                 V2 =runif(10, 1, 80), 
+                 V3 = runif(10, 1, 100))
+Show Solution47. How to compute the correlation of each column with the succeeding column?
+Difficulty Level: L2
+
+Compute the correlation of each column of df with its succeeding column.
+
+Input
+
+DT <-  fread('https://raw.githubusercontent.com/selva86/datasets/master/Cars93_miss.csv')
+Desired Output
+
+                 Price
+   Min.Price 0.9705018
+             Max.Price 
+       Price 0.9802519
+              MPG.city
+  Max.Price -0.5377239
+           MPG.highway
+  MPG.city   0.9479157
+            EngineSize
+MPG.highway -0.6259651
+            Horsepower 
+ EngineSize  0.7313269
+                   RPM
+ Horsepower 0.04736874
+          Rev.per.mile
+      RPM    0.4623314
+(...truncated...)
+Show Solution48. How to replace both the diagonals of data.table with 0?
+Difficulty Level: L2
+
+Replace both values in both diagonals of DT with 0.
+
+Input
+
+DT <- data.table(V1= runif(4, 1, 100), V2 =runif(4, 1, 80), V3 = runif(4, 1, 100), V4 = runif(4,1, 50))
+
+          V1        V2        V3       V4
+1: 97.451642 65.393451  6.496714 27.80014
+2: 56.475427  5.234317 80.551154 10.86617
+3: 65.965884 18.954913 70.968490 25.92509
+4:  3.723218 26.590925 75.723006 42.22132
+Desired output
+
+         V1       V2        V3       V4
+1:  0.00000 65.39345  6.496714  0.00000
+2: 56.47543  0.00000  0.000000 10.86617
+3: 65.96588  0.00000  0.000000 25.92509
+4:  0.00000 26.59093 75.723006  0.00000
+Show Solution49. How to join two dataframes by 2 columns so they have only the common rows?
+Difficulty Level: L2
+
+Join dataframes df1 and df2 by ‘fruit-pazham’ and ‘weight-kilo’.
+
+Input
+
+DT1 = data.table(fruit =  c('apple', 'banana', 'orange'),
+                    weight =  c('high', 'medium', 'low'),
+                    price=  c(1,2,3))
+
+DT2 = data.table(pazham =  c('apple', 'orange', 'pine'),
+                    kilo= c('high', 'low', 'high'),
+                    price =  c(1,2,3))
+Desired Output
+
+    fruit weight price_left price_right
+1:  apple   high          1           1
+2: orange    low          3           2
+Show Solution50. How to get the positions where values of two columns of data.table match?
+Difficulty Level: L2
+
+Question : Get the positions where values of two columns of DT match.
+
+Input
+
+DT <- data.table(fruit1 =  c('apple', 'orange', 'banana', 'mango),
+                 fruit2 =  c('apple', 'grapes', 'banana', 'jackfruit'))
+Desired Output
+
+1 3
+Show Solution51. How to create lags and leads of a column in a data.table?
+Difficulty Level: L2
+
+Create two new columns in df, one of which is a lag 1 (shift column a down by 1 row) of column ‘a’ and the other is a lead 1 (shift column b up by 1 row).
+
+Input
+
+DT <- data.table(V1 = runif(4, 1, 100), 
+                 V2 = runif(4, 1, 80), 
+                 V3 = runif(4, 1, 100), 
+                 V4 = runif(4,1, 50))
+Desired Output
+
+         V1       V2        V3       V4 lagged_column lead_column
+1: 90.41034 79.62526 57.525005 16.88133            NA    13.19427
+2: 13.19427 29.20243  3.962821 35.72731      90.41034    13.79110
+3: 13.79110 15.68368 78.933011 18.43108      13.19427    86.76293
+4: 86.76293 33.66214  6.706639 43.40251      13.79110          NA
+Show Solution52. How to get the frequency of unique values in the entire dataframe?
+Difficulty Level: L2
+
+Question : Get the frequency of unique values in the entire dataframe DT.
+
+Input
+
+DT <- data.table(fruit =  c('apple', 'orange', 'banana', 'apple'))
+Desired Output
+
+    fruit number_of_distinct_orders
+1:  apple                         2
+2: orange                         1
+3: banana                         1
+Show Solution53. How to convert a table from long to wide format using R data.table?
+Question : Create a pivot table out of DT keeping ID & Month as key.
+
+Difficulty Level: L2
+
+Input
+
+n <- 5
+DT <- data.table(  
+    ID       = sample(1:20, n, replace=TRUE), 
+    Month    = sample(1:12, n, replace=TRUE),
+    Category = c("Drinks", "Food", "Drinks", "Food", "Food"),
+    Expenses = runif(n),
+    key      = c('ID', 'Month')
+)
+   ID Month Category  Expenses
+1:  4     3   Drinks 0.9921504
+2:  4     4     Food 0.8073523
+3:  8    10     Food 0.5533336
+4: 14     8     Food 0.2588098
+5: 20     4   Drinks 0.2012480
+Desired Output
+
+   ID Month    Drinks      Food
+1:  4     3 0.9921504 0.0000000
+2:  4     4 0.0000000 0.8073523
+3:  8    10 0.0000000 0.5533336
+4: 14     8 0.0000000 0.2588098
+5: 20     4 0.2012480 0.0000000
+Show Solution54. How to create a bootstrap sample (sample same number of rows with replacement) from a data.table?
+Difficulty Level: L2
+
+Question : Create a bootstrap sample of length 5 from DT.
+
+Input
+
+DT <- data.table(V1 = runif(20, 1, 100), 
+                 V2 = runif(20, 1, 80), 
+                 V3 = runif(20, 1, 100), 
+                 V4 = runif(20,1, 50))
+Show Solution55. How to bin a numeric column with user custom intervals to form a categorical (text) column?
+Difficulty Level: L2
+
+In DT, create a new column (cat_col, that has 'fail' if the average of the first two columns is less than 40. Else, it contains 'pass'.
+
+Input
+
+set.seed(100)
+DT <- data.table(V1 = runif(20, 1, 100), 
+                 V2 = runif(20, 1, 80))
+Desired Ouput
+
+           V1       V2 cat_col
+ 1: 31.468845 43.32908    fail
+ 2: 26.509578 57.15350    pass
+ 3: 55.679921 43.52955    pass
+ 4:  6.581932 60.16881    fail
+ 5: 47.386379 34.18801    pass
+ 6: 48.893303 14.54220    fail
+(...truncated...)
+Show Solution56. How to convert a data.table from wide to long format?
+Difficulty Level: L2
+
+Question : Convert DT from wide to long format by keeping ID & Month as key.
+
+Input
+
+n <- 5
+DT <- data.table(
+  ID       = sample(1:20, n, replace=TRUE), 
+  Month    = sample(1:12, n, replace=TRUE),
+  Drinks   = sample(10:20,n, replace = TRUE),
+  Food     = sample(10:20,n, replace = TRUE),
+  Starters = sample(5:15,n, replace = TRUE)   
+)
+
+   ID Month Drinks Food Starters
+1:  1    12     17   14       13
+2: 14     2     12   12       11
+3: 12     7     12   15       11
+4: 19     1     16   15       15
+5: 15    11     17   10       10
+Desired Output
+
+   ID Month variable value
+1: 14     4   Drinks    12
+2:  4    11   Drinks    18
+3: 19     5   Drinks    17
+4: 19     7   Drinks    15
+5: 14     4   Drinks    11
+6: 14     4     Food    14
+(...truncated...)
+Show Solution57. How to create a dataframe that contains the first 3 lags of a time series data?
+Difficulty Level: L2
+
+Question : Append a new column in DT with first three lag of column V1.
+
+Input
+
+DT <- data.table(Date = seq(as.Date('2011-01-01'),as.Date('2011-01-10'),by = 1), 
+                 V1   = round(runif(10, 1, 80),2))
+Desired Output
+
+         Date    V1  lag1  lag2  lag3
+1: 2011-01-01 48.92    NA    NA    NA
+2: 2011-01-02 65.45 48.92    NA    NA
+3: 2011-01-03 67.63 65.45 48.92    NA
+4: 2011-01-04 63.26 67.63 65.45 48.92
+5: 2011-01-05  2.50 63.26 67.63 65.45
+6: 2011-01-06 56.15  2.50 63.26 67.63
+7: 2011-01-07 65.39 56.15  2.50 63.26
+8: 2011-01-08 45.90 65.39 56.15  2.50
+Show Solution58. How to shuffle rows of a dataframe?
+Difficulty Level: L2
+
+Question : Shuffle rows of DT.
+
+Input
+
+DT <- data.table(Date = seq(as.Date('2011-01-01'),as.Date('2011-01-10'),by = 1), 
+                 V1   = runif(10, 1, 80), 
+                 V2   = runif(10, 1, 100), 
+                 V3   = runif(10,1, 50))
+Show Solution59. How to select rows between two dates in a dataframe?
+Difficulty Level: L1
+
+Question : Select all rows between dates 2011-01-05 & 2011-01-08 in DT.
+
+Input
+
+set.seed(100)
+DT <- data.table(Date = seq(as.Date('2011-01-01'),as.Date('2011-01-10'),by = 1), 
+                 V1   = runif(10, 1, 80), 
+                 V2   = runif(10, 1, 100), 
+                 V3   = runif(10,1, 50))
+Desired Output
+
+         Date       V1       V2        V3
+1: 2011-01-06 28.39314 36.99609 29.814114
+2: 2011-01-07 52.53458 33.46489  5.073762
+Show Solution
